@@ -32,14 +32,14 @@ if __name__ == "__main__":
 
     print(f"{Fore.GREEN}{'*' * 30}")
     print(
-        f"{Fore.GREEN}🎄 Advent of Code {current_year} - Day {current_day} {Style.RESET_ALL} 
+        f"{Fore.GREEN}🎄 Advent of Code {current_year} - Day {current_day} {Style.RESET_ALL}"
     )
     print(f"{Fore.GREEN}{'*' * 30}")
     print(
-        f"{Fore.BLUE}🔍 Look {Style.BRIGHT}{Fore.YELLOW}https://adventofcode.com/{current_year}/day/{current_day}{Style.RESET_ALL} for more info {Style.RESET_ALL} 
+        f"{Fore.BLUE}🔍 Look {Style.BRIGHT}{Fore.YELLOW}https://adventofcode.com/{current_year}/day/{current_day}{Style.RESET_ALL} for more info {Style.RESET_ALL}"
     )
     print(
-        f"{Fore.RED}Don't forget to check the problem statement and understand it well! {Style.RESET_ALL} 💡
+        f"{Fore.RED}Don't forget to check the problem statement and understand it well! {Style.RESET_ALL} 💡"
     )
     print(
         f"{Fore.CYAN}If you finish it or if you're stuck, don't forget to check out other solutions on the solution megathread on Reddit: {Style.BRIGHT}{Fore.YELLOW}https://www.reddit.com/r/adventofcode{Style.RESET_ALL}"
