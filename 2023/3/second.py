@@ -31,8 +31,8 @@ def get_parts() -> List[List[Tuple[int, int, int]]]:
 
         # Find all numbers in the line
         for match in re.finditer(r"\d+", line):
-            start_index = match.start(0)
-            end_index = match.end(0) - 1
+            start_index = match.start(0) - 1
+            end_index = match.end(0)
             number = int(match.group(0))
             part = (start_index, end_index, number)
             parts[i].append(part)
@@ -58,7 +58,7 @@ for i, line in enumerate(lines):
 
             # Loop over each part in the line
             for start_index, end_index, number in parts[i + k]:
-                if start_index - 1 <= j <= end_index + 1:
+                if start_index <= j <= end_index:
                     adjacent_parts.append(number)
 
         # If there are two adjacent parts, multiply them and add to the count
