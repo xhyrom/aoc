@@ -1,7 +1,7 @@
 cards = open("./input.txt").readlines()
 
 count = 0
-multiplier = [1 for i in cards]
+multiplier = [1 for _ in cards]
 
 for i, card in enumerate(cards):
     card = card.split(":")[1].split("|")
