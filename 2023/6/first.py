@@ -1,5 +1,3 @@
-import re
-
 file = open("./input.txt").readlines()
 
 games = []
@@ -11,9 +9,7 @@ for i, line in enumerate(file):
     numbers = [int(x) for x in line.split()]
     for y, num in enumerate(numbers):
         if len(games) <= y:
-            games.append({
-                "r": 0
-            })
+            games.append({"r": 0})
 
         games[y]["time" if i == 0 else "distance"] = num
 
