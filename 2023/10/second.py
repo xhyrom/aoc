@@ -135,6 +135,11 @@ for i in range(len(lines)):
 
         if (j, i) in dist:
             pipe_directions = pipe_to_direction_mappings[con]
+            """
+            If the point is inside the polygon, the number of intersections with the edge will be odd, and if it is outside
+            the polygon, it will intersect with the edge an even number of times.
+            Pipes with north direction: |, L and J
+            """
             if "n" in pipe_directions:
                 norths += 1
             continue
