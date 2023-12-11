@@ -1,5 +1,3 @@
-
-
 import datetime
 import urllib.request
 import os
@@ -18,7 +16,7 @@ def download_input(env: Env, year: int, day: int) -> None:
 
 
 def setup(year: int, day: int) -> None:
-    os.makedirs(f"./{year}/{day}", exist_ok=True)
+    os.makedirs(f"./{year}/{day:02}", exist_ok=True)
 
 
 # Run this to setup new day
