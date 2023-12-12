@@ -1,0 +1,72 @@
+---
+import { getCollection } from "astro:content";
+import { yearsBetween } from "../lib/common.ts";
+import Layout from "../layouts/Layout.astro";
+import Container from "../components/Container.astro";
+
+const series = await Promise.all(
+  yearsBetween(2015).map(async (year) => {
+    // @ts-expect-error
+    const collection = await getCollection(`lb-${year}`);
+    if (collection.length < 25) {
+      for (let i = collection.length; i < 25; i++) {
+        // @ts-expect-error - this is fine
+        collection.push({
+          data: Array.from({ length: 100 }, (_, __) => ({
+            time: {
+              hours: null,
+              minutes: null,
+              seconds: null,
+            },
+          })),
+        });
+      }
+    }
+
+    return {
+      name: year,
+      data: collection.map((day) =>
+        day.data[99].time.hours == null
+          ? null
+          : day.data[99].time.hours * 60 * 60 +
+            day.data[99].time.minutes * 60 +
+            day.data[99].time.seconds,
+      ),
+    };
+  }),
+);
+
+const seriesEncoded = btoa(JSON.stringify(series));
+---
+
+<Layout>
+  <Container class="pt-4 pb-4">
+    <aoc-line-chart data-series={seriesEncoded} data-id="line-chart"
+    ></aoc-line-chart>
+    <aoc-heat-map-chart data-series={seriesEncoded} data-id="heat-chart"
+    ></aoc-heat-map-chart>
+
+    <div>
+      <p class="text-2xl text-center font-bold">Leaderboard times</p>
+      <p>
+        Unofficial leaderboard times for the <a
+          class="text-yellow-600"
+          href="https://adventofcode.com">Advent of Code</a
+        > challenges.
+      </p>
+    </div>
+
+    <main>
+      <section>
+        <div id="line-chart"></div>
+      </section>
+
+      <section>
+        <div id="heat-chart"></div>
+      </section>
+    </main>
+
+    <script src="../lib/line_chart.ts"></script>
+    <script src="../lib/heat_map_chart.ts"></script>
+  </Container>
+</Layout>

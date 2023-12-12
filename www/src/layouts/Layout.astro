@@ -1,0 +1,38 @@
+---
+import Footer from "../components/Footer.astro";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://adventofcode.com/favicon.png"
+    />
+    <meta name="viewport" content="width=device-width" />
+    <title>(Unofficial) Advent of Code Charts</title>
+  </head>
+  <body class="overflow-x-hidden bg-white font-sans">
+    <div class="flex min-h-screen flex-col">
+      <div class="flex-grow">
+        <slot />
+      </div>
+
+      <Footer />
+    </div>
+
+    <style is:global>
+      ::-webkit-scrollbar {
+        width: 16px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        border: 6px solid rgba(0, 0, 0, 0);
+        background-clip: padding-box;
+        border-radius: 9999px;
+        background-color: #aaaaaa;
+      }
+    </style>
+  </body>
+</html>

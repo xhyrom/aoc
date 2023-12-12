@@ -1,0 +1,25 @@
+on:
+  schedule:
+    - cron: "0 8 * * *"
+
+jobs:
+  update_leaderboard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Run script
+        run: |
+          cd www
+          bun install
+          cd lib
+          bun parse.ts
+
+      - name: Commit & Push changes
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          message: "update leaderboard ${date}"
