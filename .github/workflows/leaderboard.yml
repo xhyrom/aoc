@@ -1,7 +1,7 @@
 name: update AOC leaderboard
 on:
   schedule:
-    - cron: "0 8 * * *"
+    - cron: "0 8 1-25 12 *"
   workflow_dispatch:
 
 permissions:
