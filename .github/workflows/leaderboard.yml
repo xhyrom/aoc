@@ -4,6 +4,9 @@ on:
     - cron: "0 8 * * *"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   update_leaderboard:
     runs-on: ubuntu-latest
