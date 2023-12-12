@@ -15,8 +15,8 @@ dependencies:
     specifier: ^0.1.0
     version: 0.1.0
   '@xhyrom/configs':
-    specifier: ^0.1.0
-    version: 0.1.0(postcss@8.4.32)(typescript@5.3.3)
+    specifier: ^0.1.1
+    version: 0.1.1(postcss@8.4.32)(typescript@5.3.3)
   apexcharts:
     specifier: ^3.44.2
     version: 3.44.2
@@ -1140,9 +1140,10 @@ packages:
     resolution: {integrity: sha512-v3Jtvsip297n+nijTMvc8ZsgkOVRqw3EGQYAmWjgZrdsfXReogB4XfDFMn8lXX+QK88gbVhbb9rl6DfZ6Nqg0A==}
     dev: false
 
-  /@xhyrom/configs@0.1.0(postcss@8.4.32)(typescript@5.3.3):
-    resolution: {integrity: sha512-wmFXMko9feWWl61Ff7zkF2Meh0Cq8IFjfkFpFa6p5U0bidWCRdpw73nCKqiIcCwaf4bqSA4VQcxB1JXY6BIopA==}
+  /@xhyrom/configs@0.1.1(postcss@8.4.32)(typescript@5.3.3):
+    resolution: {integrity: sha512-pDHxRd2XLV2Yi1UYTvZ58eQOYXR/jsATAh1Iwo9C50DyPZbVsryo/hpn+Yyi5OrPxrM00OpyY3owrF6gLh6Ccw==}
     optionalDependencies:
+      '@xhyrom/colour-palette': 0.1.0
       tailwindcss: 3.3.6
       tsup: 7.2.0(postcss@8.4.32)(typescript@5.3.3)
     transitivePeerDependencies:
