@@ -6,12 +6,17 @@ const day = process.argv[2] || date.getDate();
 const year = process.argv[3] || date.getFullYear();
 
 const res = await (
-  await fetch(`https://adventofcode.com/${year}/leaderboard/day/${day}`)
+  await fetch(`https://adventofcode.com/${year}/leaderboard/day/${day}`, {
+    headers: {
+      "User-Agent":
+        "source at github.com/xHyroM/aoc/blob/main/www/lib/parse.ts",
+    },
+  })
 ).text();
 
 const parser = new JSDOM(res);
 let entries = Array.from(
-  parser.window.document.querySelectorAll(".leaderboard-entry")
+  parser.window.document.querySelectorAll(".leaderboard-entry"),
 );
 
 entries = entries.slice(0, 100);
@@ -42,7 +47,7 @@ try {
 
 await writeFile(
   `${import.meta.dir}/../src/content/lb-${year}/${pad(day)}.json`,
-  JSON.stringify(parsed, null, 2)
+  JSON.stringify(parsed, null, 2),
 );
 
 export default {};

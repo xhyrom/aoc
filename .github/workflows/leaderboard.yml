@@ -27,4 +27,4 @@ jobs:
         uses: actions-js/push@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          message: "update leaderboard ${date}"
+          message: "update leaderboard"
