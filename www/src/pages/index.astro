@@ -4,6 +4,7 @@ import { yearsBetween } from "../lib/common.ts";
 import Layout from "../layouts/Layout.astro";
 import Container from "../components/Container.astro";
 
+const currentYear = new Date().getFullYear();
 const series = await Promise.all(
   yearsBetween(2015).map(async (year) => {
     // @ts-expect-error
@@ -82,6 +83,11 @@ const statsEncoded = btoa(JSON.stringify(stats));
               href="https://adventofcode.com">Advent of Code</a
             >. Stars are updated at 00:00 UTC and 8:00 UTC.
           </p>
+          <p>
+            Showing stars for the year <span id="year" class="text-yellow-600"
+              >{currentYear}</span
+            >
+          </p>
 
           <div id="bar-chart"></div>
 
@@ -91,7 +97,7 @@ const statsEncoded = btoa(JSON.stringify(stats));
                 yearsBetween(2015).map((year) => (
                   <button
                     class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-full mx-2 my-1"
-                    onclick="document.querySelector('aoc-bar-chart').setAttribute('data-year', this.dataset.year);"
+                    onclick="document.querySelector('aoc-bar-chart').setAttribute('data-year', this.dataset.year); document.querySelector('#year').innerText = this.dataset.year;"
                     data-year={year}
                   >
                     {year}
