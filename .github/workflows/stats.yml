@@ -1,7 +1,7 @@
-name: update AOC leaderboard
+name: update AOC stats
 on:
   schedule:
-    - cron: "0 8 1-25 12 *"
+    - cron: "0 0 1-25 12 *"
   workflow_dispatch:
 
 permissions:
@@ -21,11 +21,10 @@ jobs:
           cd www
           bun install
           cd lib
-          bun parse_lb.ts
           bun parse_stats.ts
 
       - name: Commit & Push changes
         uses: actions-js/push@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          message: "update leaderboard"
+          message: "update stats"

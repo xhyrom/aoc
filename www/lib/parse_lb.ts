@@ -9,7 +9,7 @@ const res = await (
   await fetch(`https://adventofcode.com/${year}/leaderboard/day/${day}`, {
     headers: {
       "User-Agent":
-        "source at github.com/xHyroM/aoc/blob/main/www/lib/parse.ts",
+        "source at github.com/xHyroM/aoc/blob/main/www/lib/parse_lb.ts",
     },
   })
 ).text();

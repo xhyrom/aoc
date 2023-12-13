@@ -17,9 +17,17 @@ export const secondsToHumanReadable = (value: number): string => {
   return label || "-";
 };
 
+export const numberFormatter = (value: number): string => {
+  if (value === undefined || Number.isNaN(value)) {
+    return "??";
+  }
+
+  return new Intl.NumberFormat().format(value);
+};
+
 export const yearsBetween = (
   first: number,
-  second: number = new Date().getFullYear()
+  second: number = new Date().getFullYear(),
 ): number[] => {
   const years = [];
   for (let i = first; i <= second; i++) {

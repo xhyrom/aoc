@@ -37,6 +37,13 @@ const series = await Promise.all(
 );
 
 const seriesEncoded = btoa(JSON.stringify(series));
+
+const stats = (await getCollection("stats")).map((data) => ({
+  name: data.id,
+  data: data.data,
+}));
+
+const statsEncoded = btoa(JSON.stringify(stats));
 ---
 
 <Layout>
@@ -45,18 +52,19 @@ const seriesEncoded = btoa(JSON.stringify(series));
     ></aoc-line-chart>
     <aoc-heat-map-chart data-series={seriesEncoded} data-id="heat-chart"
     ></aoc-heat-map-chart>
-
-    <div>
-      <p class="text-2xl text-center font-bold">Leaderboard times</p>
-      <p>
-        Unofficial leaderboard times for the <a
-          class="text-yellow-600"
-          href="https://adventofcode.com">Advent of Code</a
-        > challenges.
-      </p>
-    </div>
+    <aoc-bar-chart data-data={statsEncoded} data-id="bar-chart"></aoc-bar-chart>
 
     <main>
+      <div>
+        <p class="text-2xl font-bold">Leaderboard times</p>
+        <p>
+          Unofficial leaderboard times for the <a
+            class="text-yellow-600"
+            href="https://adventofcode.com">Advent of Code</a
+          > challenges.
+        </p>
+      </div>
+
       <section>
         <div id="line-chart"></div>
       </section>
@@ -64,9 +72,40 @@ const seriesEncoded = btoa(JSON.stringify(series));
       <section>
         <div id="heat-chart"></div>
       </section>
-    </main>
 
-    <script src="../lib/line_chart.ts"></script>
-    <script src="../lib/heat_map_chart.ts"></script>
+      <section>
+        <div>
+          <p class="text-2xl font-bold">Stars</p>
+          <p>
+            You can see stars directly on the <a
+              class="text-yellow-600"
+              href="https://adventofcode.com">Advent of Code</a
+            >. Stars are updated at 00:00 UTC and 8:00 UTC.
+          </p>
+
+          <div id="bar-chart"></div>
+
+          <div class="flex justify-center mt-4">
+            <div class="flex flex-wrap justify-center">
+              {
+                yearsBetween(2015).map((year) => (
+                  <button
+                    class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-full mx-2 my-1"
+                    onclick="document.querySelector('aoc-bar-chart').setAttribute('data-year', this.dataset.year);"
+                    data-year={year}
+                  >
+                    {year}
+                  </button>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+
+        <script src="../lib/line_chart.ts"></script>
+        <script src="../lib/heat_map_chart.ts"></script>
+        <script src="../lib/bar_chart.ts"></script>
+      </section>
+    </main>
   </Container>
 </Layout>
