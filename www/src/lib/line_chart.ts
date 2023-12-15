@@ -9,10 +9,14 @@ class Chart extends HTMLElement {
     const chart = new ApexCharts(document.getElementById(this.dataset.id!), {
       chart: {
         type: "line",
+        background: "#262626",
         height: 500,
         animations: {
           enabled: false,
         },
+      },
+      theme: {
+        mode: "dark",
       },
       series,
       xaxis: {
@@ -32,7 +36,7 @@ class Chart extends HTMLElement {
       stroke: {
         curve: "smooth",
         width: Array.from({ length: 9 }, (_, i) => i + 2015).map((year) =>
-          year == new Date().getFullYear() ? 5 : 2
+          year == new Date().getFullYear() ? 5 : 2,
         ),
       },
       legend: {

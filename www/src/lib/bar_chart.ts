@@ -31,10 +31,14 @@ class Chart extends HTMLElement {
       chart: {
         type: "bar",
         height: 500,
+        background: "#262626",
         stacked: true,
         animations: {
           enabled: false,
         },
+      },
+      theme: {
+        mode: "dark",
       },
       responsive: [
         {
@@ -91,6 +95,9 @@ class Chart extends HTMLElement {
         bar: {
           dataLabels: {
             total: {
+              style: {
+                color: "#fff",
+              },
               enabled: true,
             },
           },

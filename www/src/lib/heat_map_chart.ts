@@ -10,9 +10,13 @@ class Chart extends HTMLElement {
       chart: {
         type: "heatmap",
         height: 500,
+        background: "#262626",
         animations: {
           enabled: false,
         },
+      },
+      theme: {
+        mode: "dark",
       },
       series,
       plotOptions: {
