@@ -1,92 +1,97 @@
 [
   {
+    "day": 19,
+    "both": 2698,
+    "first": 3521
+  },
+  {
     "day": 18,
-    "both": 15001,
-    "first": 5094
+    "both": 15977,
+    "first": 4910
   },
   {
     "day": 17,
-    "both": 16982,
-    "first": 1077
+    "both": 17258,
+    "first": 1065
   },
   {
     "day": 16,
-    "both": 28573,
-    "first": 865
+    "both": 28756,
+    "first": 883
   },
   {
     "day": 15,
-    "both": 34267,
-    "first": 3565
+    "both": 34431,
+    "first": 3570
   },
   {
     "day": 14,
-    "both": 30864,
-    "first": 6463
+    "both": 30983,
+    "first": 6483
   },
   {
     "day": 13,
-    "both": 32805,
-    "first": 4567
+    "both": 32931,
+    "first": 4580
   },
   {
     "day": 12,
-    "both": 26361,
-    "first": 13263
+    "both": 26440,
+    "first": 13284
   },
   {
     "day": 11,
-    "both": 50848,
-    "first": 2072
+    "both": 50963,
+    "first": 2082
   },
   {
     "day": 10,
-    "both": 42923,
-    "first": 15374
+    "both": 43023,
+    "first": 15405
   },
   {
     "day": 9,
-    "both": 68799,
-    "first": 1019
+    "both": 68925,
+    "first": 1012
   },
   {
     "day": 8,
-    "both": 67312,
-    "first": 13194
+    "both": 67433,
+    "first": 13220
   },
   {
     "day": 7,
-    "both": 74765,
-    "first": 6606
+    "both": 74882,
+    "first": 6609
   },
   {
     "day": 6,
-    "both": 94904,
-    "first": 1582
+    "both": 95031,
+    "first": 1586
   },
   {
     "day": 5,
-    "both": 73971,
-    "first": 28704
+    "both": 74062,
+    "first": 28749
   },
   {
     "day": 4,
-    "both": 120871,
-    "first": 16244
+    "both": 121030,
+    "first": 16261
   },
   {
     "day": 3,
-    "both": 121406,
-    "first": 18292
+    "both": 121567,
+    "first": 18306
   },
   {
     "day": 2,
-    "both": 183496,
-    "first": 8522
+    "both": 183708,
+    "first": 8532
   },
   {
     "day": 1,
-    "both": 216966,
-    "first": 69143
+    "both": 217211,
+    "first": 69231
   }
 ]
