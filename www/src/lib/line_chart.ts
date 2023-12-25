@@ -32,7 +32,7 @@ class Chart extends HTMLElement {
       stroke: {
         curve: "smooth",
         width: Array.from({ length: 9 }, (_, i) => i + 2015).map((year) =>
-          year == new Date().getFullYear() ? 5 : 2
+          year == new Date().getFullYear() ? 5 : 2,
         ),
       },
       legend: {
@@ -52,14 +52,41 @@ class Chart extends HTMLElement {
         },
       },
       yaxis: {
+        min: minInSeries(series),
+        max: maxInSeries(series),
         labels: {
           formatter: secondsToHumanReadable,
         },
+        logarithmic: true,
       },
     });
 
     chart.render();
   }
 }
+
+const minInSeries = (series: { data: number[] }[]) => {
+  let min = Infinity;
+  for (const serie of series) {
+    for (const value of serie.data) {
+      if (value < min) {
+        min = value;
+      }
+    }
+  }
+  return min;
+};
+
+const maxInSeries = (series: { data: number[] }[]) => {
+  let max = -Infinity;
+  for (const serie of series) {
+    for (const value of serie.data) {
+      if (value > max) {
+        max = value;
+      }
+    }
+  }
+  return max;
+};
 
 customElements.define("aoc-line-chart", Chart);

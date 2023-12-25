@@ -12,7 +12,7 @@ export const secondsToHumanReadable = (value: number): string => {
   }
 
   if (seconds > 0) {
-    label += `${seconds}s`;
+    label += `${seconds.toFixed(0)}s`;
   }
   return label || "-";
 };
