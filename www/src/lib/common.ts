@@ -30,6 +30,10 @@ export const yearsBetween = (
   second: number = new Date().getFullYear(),
 ): number[] => {
   const years = [];
+
+  if (new Date().getMonth() < 11) {
+    second--;
+  }
   for (let i = first; i <= second; i++) {
     years.push(i);
   }

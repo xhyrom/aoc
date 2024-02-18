@@ -10,9 +10,15 @@ class Chart extends HTMLElement {
     super();
 
     this.data = JSON.parse(atob(this.dataset.data!));
-    const selectedYear = this.dataset.year
-      ? parseInt(this.dataset.year)
-      : new Date().getFullYear();
+    let selectedYear = this.dataset.year ? parseInt(this.dataset.year) : null;
+
+    if (!selectedYear) {
+      selectedYear = new Date().getFullYear();
+
+      if (new Date().getMonth() < 11) {
+        selectedYear--;
+      }
+    }
 
     const selectedData = this.data.find((e: any) => e.name == selectedYear);
 
