@@ -103,7 +103,7 @@ def run(year: int, day: int) -> None:
             )
 
         click.echo(
-            f"{Fore.WHITE}Time: {Fore.LIGHTMAGENTA_EX}{run.time_taken_ms():.3f}ms{Style.RESET_ALL}"
+            f"{Fore.WHITE}Time: {Fore.LIGHTMAGENTA_EX}{run.time_taken_ms():.3f}ms{Style.RESET_ALL}{Fore.LIGHTRED_EX}{' (with startup time)' if run.with_startup_time else ''}{Style.RESET_ALL}"
         )
 
         click.echo()

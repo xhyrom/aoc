@@ -26,7 +26,7 @@ def _bench_and_run(command: str, path: str) -> list[Run]:
     cwd = dirname(path)
 
     start = perf_counter_ns()
-    process = run(command.split(), cwd=cwd, capture_output=True, text=True)
+    process = run(command, cwd=cwd, capture_output=True, text=True, shell=True)
     end = perf_counter_ns()
 
     runs = []
@@ -39,15 +39,17 @@ def _bench_and_run(command: str, path: str) -> list[Run]:
                 Run(
                     f"part {part_number}",
                     path,
-                    None if result == "undefined" else result,
+                    None if not result or result == "undefined" else result,
                     end - start,
+                    with_startup_time=True,
                 )
             )
         elif len(runs) > 0 and runs[-1].result is not None:
             runs[-1].result += "\n" + line.strip()
             runs[-1].result = runs[-1].result.strip()
         else:
-            print(line)
+            if line:
+                print(line)
 
     return runs
 

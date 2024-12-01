@@ -11,9 +11,14 @@ class LanguageConfig(NamedTuple):
 
 class Language(Enum):
     PYTHON = LanguageConfig("python", "py")
+    GO = LanguageConfig("go", "go", ["go run {file}"])
+    JAVA = LanguageConfig("java", "java", ["java {file}"])
     JAVASCRIPT = LanguageConfig(
         "javascript", "js", ["bun {file}", "node {file}", "deno {file}"]
     )
+    LUA = LanguageConfig("lua", "lua", ["lua {file}"])
+    RUBY = LanguageConfig("ruby", "rb", ["ruby {file}"])
+    RUST = LanguageConfig("rust", "rs", ["chmod u+x {file} && {file}"])
     TYPESCRIPT = LanguageConfig(
         "typescript",
         "ts",
