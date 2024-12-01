@@ -1,0 +1,5 @@
+colorama==0.4.6
+environs==11.2.1
+marshmallow==3.23.1
+packaging==24.2
+python-dotenv==1.0.1
