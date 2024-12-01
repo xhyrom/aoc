@@ -1,0 +1,8 @@
+[providers]
+[providers.github]
+ssh = "git@github.com:xhyrom/aoc.git"
+[providers.sourcehut]
+ssh = "git@git.sr.ht:~hyro/aoc"
+primary = true
+[providers.codeberg]
+ssh = "git@codeberg.org:xHyroM/aoc.git"
