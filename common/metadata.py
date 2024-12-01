@@ -31,6 +31,10 @@ def read_day_metadata(year: int, day: int) -> Metadata:
 
     try:
         with open(f"./{year}/{day:02}/__glint__/meta.json") as f:
-            return Metadata(**loads(f.read()))
+            obj = loads(f.read())
+            lang = Language.from_name(obj["language"])
+            del obj["language"]
+
+            return Metadata(lang, **obj)
     except FileNotFoundError:
         return Metadata(Language.PYTHON, ["first.py", "second.py"])

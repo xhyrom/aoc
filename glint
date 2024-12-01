@@ -59,8 +59,8 @@ def puzzle(year: int, day: int, language: Language, separate: bool) -> None:
     save("e1.input.txt", fetch_example(year, day, 1))
 
     if separate:
-        save("part_1.py", get_template(language, "part_1"))
-        save("part_2.py", get_template(language, "part_2"))
+        save(f"part_1.{language.extension}", get_template(language, "part_1"))
+        save(f"part_2.{language.extension}", get_template(language, "part_2"))
     else:
         save(f"solution.{language.extension}", get_template(language), False)
 
