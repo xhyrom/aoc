@@ -1,11 +1,10 @@
-<h1 align="center">
-  Advent of Code Solutions
-</h1>
+# Advent of Code
 
-<h4 align="center">This repository contains my solutions to the <a href="https://adventofcode.com/">Advent of Code</a> challenges.</h4>
+In this repository, you can find all my solutions to the [Advent of Code](http://adventofcode.com/) challenges mostly written in Python.
 
-<p align="center">
-    <a href="https://s.xhyrom.dev/discord" alt="Discord">
-        <img src="https://img.shields.io/discord/1046534628577640528?label=discord&style=for-the-badge&color=2fbfc4"/>
-    </a>
-</p>
+### 🌟 What is Advent of Code?
+
+[Advent of Code](http://adventofcode.com/) is an annual coding event featuring 25 programming
+puzzles, one for each day from December 1st to December 25th. These puzzles can be solved in
+any programming language, offering a fun and engaging way to test your skills and learn new
+concepts during the holiday season.
