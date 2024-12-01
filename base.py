@@ -11,7 +11,7 @@ def download_input(env: Env, year: int, day: int) -> None:
     request = urllib.request.Request(url, headers=headers)
     response = urllib.request.urlopen(request)
     data = response.read().decode("utf-8")
-    with open(f"./{year}/{day}/input.txt", "w") as file:
+    with open(f"./{year}/{day:02}/input.txt", "w") as file:
         file.write(data)
 
 

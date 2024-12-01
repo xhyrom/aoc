@@ -1,3 +1,4 @@
 .env
 *input.txt
 .mypy_cache/
+.venv/
