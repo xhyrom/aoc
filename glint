@@ -1,0 +1,116 @@
+#!/usr/bin/env python3
+
+from functools import partial
+
+import click
+from colorama import Fore, Style
+from environs import Env
+
+from common.aoc import fetch_example, fetch_user_input
+from common.date import current_day, current_year
+from common.file import create_day, save_to_day
+from common.metadata import Metadata, read_day_metadata, save_day_metadata
+from common.runner import run_day
+from common.template import Language, get_template
+
+
+@click.group(invoke_without_command=True)
+@click.pass_context
+def cli(ctx) -> None:
+    if ctx.invoked_subcommand is None:
+        puzzle()
+
+
+@cli.command()
+@click.option(
+    "--year", "-y", type=int, help="Year of the puzzle", default=current_year()
+)
+@click.option("--day", "-d", type=int, help="Day of the puzzle", default=current_day())
+@click.option(
+    "--language",
+    "-l",
+    type=click.Choice([lang.name for lang in Language]),
+    default=Language.PYTHON.name,
+    callback=lambda ctx, param, value: Language.from_name(value),
+)
+@click.option(
+    "--separate",
+    "-s",
+    is_flag=True,
+    help="Separate part 1 and 2",
+    default=False,
+)
+def puzzle(year: int, day: int, language: Language, separate: bool) -> None:
+    create_day(year, day)
+    save_day_metadata(
+        year,
+        day,
+        Metadata(
+            language,
+            [f"solution.{language.extension}"]
+            if not separate
+            else [f"part_1.{language.extension}", f"part_2.{language.extension}"],
+        ),
+    )
+
+    save = partial(save_to_day, year, day)
+
+    save("input.txt", fetch_user_input(year, day))
+    save("e1.input.txt", fetch_example(year, day, 1))
+
+    if separate:
+        save("part_1.py", get_template(language, "part_1"))
+        save("part_2.py", get_template(language, "part_2"))
+    else:
+        save(f"solution.{language.extension}", get_template(language), False)
+
+    repeat = 30 if day < 10 else 31
+    print(f"{Fore.GREEN}{'*' * repeat}")
+    print(f"{Fore.GREEN}🎄 Advent of Code {year} - Day {day} {Style.RESET_ALL}")
+    print(f"{Fore.GREEN}{'*' * repeat}")
+    print()
+    print(
+        f"{Fore.BLUE}🔍 Look {Style.BRIGHT}{Fore.YELLOW}https://adventofcode.com/{year}/day/{day}{Style.RESET_ALL}{Fore.BLUE} for more info {Style.RESET_ALL}"
+    )
+    print(
+        f"{Fore.RED}Don't forget to check the problem statement and understand it well! {Style.RESET_ALL} 💡"
+    )
+    print(
+        f"{Fore.CYAN}If you finish it or if you're stuck, don't forget to check out other solutions on the solution megathread on Reddit: {Style.BRIGHT}{Fore.YELLOW}https://www.reddit.com/r/adventofcode{Style.RESET_ALL}"
+    )
+    print(f"{Fore.YELLOW}Happy Coding! {Style.RESET_ALL} 👨‍💻")
+
+
+@cli.command()
+@click.option(
+    "--year", "-y", type=int, help="Year of the puzzle", default=current_year()
+)
+@click.option("--day", "-d", type=int, help="Day of the puzzle", default=current_day())
+def run(year: int, day: int) -> None:
+    metadata = read_day_metadata(year, day)
+
+    for i, run in enumerate(run_day(year, day, metadata)):
+        if i > 0:
+            click.echo(f"{Fore.LIGHTBLACK_EX}{'─' * 30}{Style.RESET_ALL}")
+
+        click.echo(
+            f"\n{Fore.CYAN}▶ {Fore.LIGHTCYAN_EX}{run.beauty_func_name()} {Fore.LIGHTBLACK_EX}({run.file_name}){Style.RESET_ALL}"
+        )
+
+        if run.result is not None:
+            click.echo(
+                f"{Fore.WHITE}Result: {Fore.LIGHTGREEN_EX}{run.result}{Style.RESET_ALL}"
+            )
+
+        click.echo(
+            f"{Fore.WHITE}Time: {Fore.LIGHTMAGENTA_EX}{run.time_taken_ms():.3f}ms{Style.RESET_ALL}"
+        )
+
+        click.echo()
+
+
+if __name__ == "__main__":
+    env = Env()
+    env.read_env()
+
+    cli()

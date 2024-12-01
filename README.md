@@ -1,6 +1,6 @@
 # Advent of Code
 
-In this repository, you can find all my solutions to the [Advent of Code](http://adventofcode.com/) challenges mostly written in Python.
+In this repository, you can find all my solutions to the [Advent of Code](http://adventofcode.com/) puzzles mostly written in Python.
 
 ### 🌟 What is Advent of Code?
 
@@ -32,5 +32,11 @@ Replace `<your session token>` with your session token from the [Advent of Code]
 After that, you can use the provided tool to set up the folder and input file for a new day:
 
 ```bash
-python base.py
+./glint
+```
+
+To run the tests for current day, use:
+
+```bash
+./glint run
 ```
