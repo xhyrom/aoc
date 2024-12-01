@@ -22,7 +22,13 @@ class Chart extends HTMLElement {
           colorScale: {
             ranges: [
               {
-                from: 0,
+                from: -Infinity,
+                to: 0,
+                name: "-",
+                color: "#808080",
+              },
+              {
+                from: 0.01,
                 to: 10 * 60,
                 name: "easy",
                 color: "#1bf514",

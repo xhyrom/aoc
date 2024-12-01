@@ -7,11 +7,9 @@ import Container from "../components/Container.astro";
 const currentYear = new Date().getFullYear();
 const series = await Promise.all(
   yearsBetween(2015).map(async (year) => {
-    // @ts-expect-error
     const collection = await getCollection(`lb-${year}`);
     if (collection.length < 25) {
       for (let i = collection.length; i < 25; i++) {
-        // @ts-expect-error - this is fine
         collection.push({
           data: Array.from({ length: 100 }, (_, __) => ({
             time: {
