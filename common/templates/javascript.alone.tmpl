@@ -1,5 +1,13 @@
 function {func_name}() {
-
+    return "";
 }
 
-console.log("{func_name}:", {func_name}());
+function run(fun) {
+    const start = process.hrtime.bigint();
+    const result = fun();
+    const duration = process.hrtime.bigint() - start;
+    console.log(`(${duration}): ${result}`);
+}
+
+process.stdout.write("{func_name} ");
+run({func_name});

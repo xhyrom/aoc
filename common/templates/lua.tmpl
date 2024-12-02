@@ -6,5 +6,14 @@ local function part_2()
     return ""
 end
 
-print("part_1:", part_1())
-print("part_2:", part_2())
+local function run(fun)
+    local start = os.clock()
+    local result = fun()
+    local duration = math.floor((os.clock() - start) * 1e9)
+    print(string.format("(%d): %s", duration, result))
+end
+
+io.write("part_1 ")
+run(part_1)
+io.write("part_2 ")
+run(part_2)

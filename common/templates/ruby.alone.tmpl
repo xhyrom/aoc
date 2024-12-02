@@ -2,4 +2,12 @@ def {func_name}
   return ""
 end
 
-puts "{func_name}: #{{func_name}}"
+def run(fun)
+  start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :nanosecond)
+  result = fun.call
+  duration = Process.clock_gettime(Process::CLOCK_MONOTONIC, :nanosecond) - start
+  puts "(#{duration}): #{result}"
+end
+
+print "{func_name} "
+run -> { {func_name} }

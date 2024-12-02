@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	_ "unsafe"
 )
 
 func part_1() string {
@@ -12,7 +13,19 @@ func part_2() string {
 	return ""
 }
 
+//go:linkname nanotime runtime.nanotime
+func nanotime() int64
+
+func run(fun func() string) {
+	start := nanotime()
+	result := fun()
+	duration := nanotime() - start
+	fmt.Printf("(%d): %v\n", duration, result)
+}
+
 func main() {
-	fmt.Println("part_1:", part_1())
-	fmt.Println("part_2:", part_2())
+	fmt.Print("part_1 ")
+	run(part_1)
+	fmt.Print("part_2 ")
+	run(part_2)
 }

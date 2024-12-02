@@ -1,7 +1,6 @@
 from os.path import abspath, dirname
 from shutil import which
 from subprocess import run
-from time import perf_counter_ns
 
 from common.metadata import Metadata
 from common.runners.run import Run
@@ -25,23 +24,22 @@ def _get_run_command(language: Language) -> str | None:
 def _bench_and_run(command: str, path: str) -> list[Run]:
     cwd = dirname(path)
 
-    start = perf_counter_ns()
     process = run(command, cwd=cwd, capture_output=True, text=True, shell=True)
-    end = perf_counter_ns()
 
     runs = []
 
     for line in process.stdout.split("\n"):
-        if line.startswith("part_"):
-            part_number = int(line.split("_")[1].split(":")[0])
+        if line.startswith("part_"):  # format: part_n (number): result
+            part_number = int(line.split("_")[1].split()[0])
+            duration = int(line.split("(")[1].split(")")[0])
+
             result = line.split(":")[1].strip()
             runs.append(
                 Run(
                     f"part {part_number}",
                     path,
                     None if not result or result == "undefined" else result,
-                    end - start,
-                    with_startup_time=True,
+                    duration,
                 )
             )
         elif len(runs) > 0 and runs[-1].result is not None:

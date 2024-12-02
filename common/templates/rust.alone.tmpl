@@ -1,9 +1,19 @@
 //bin/true; src="$(basename "$0")"; rustc -o "/tmp/${src}.bin" 1>&2 "$0" && "/tmp/${src}.bin" "$@"; exit $?
 
+use std::time::Instant;
+
 pub fn {func_name}() -> String {
     return "".to_string();
 }
 
+fn run<F: Fn() -> String>(f: F) {
+    let start = Instant::now();
+    let result = f();
+    let duration = start.elapsed().as_nanos();
+    println!("({}): {}", duration, result);
+}
+
 pub fn main() {
-    println!("{func_name}: {}", {func_name}());
+    print!("{func_name} ");
+    run({func_name});
 }

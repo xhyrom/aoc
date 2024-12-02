@@ -1,9 +1,21 @@
 class Main {
 
+    @FunctionalInterface
+    interface Part {
+        Object run();
+    }
+
+    private static void run(Part part, String name) {
+        long start = System.nanoTime();
+        Object result = part.run();
+        long duration = System.nanoTime() - start;
+        System.out.printf("%s (%d): %s%n", name, duration, result);
+    }
+
     public static void main(String[] args) {
         {func_name} part = new {func_name}();
 
-        System.out.println("{func_name}: " + part.run());
+        run(part::run, "{func_name}");
     }
 }
 

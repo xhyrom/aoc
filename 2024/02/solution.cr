@@ -44,5 +44,14 @@ def part_2
   return result
 end
 
-puts "part_1: #{part_1}"
-puts "part_2: #{part_2}"
+def run(fn)
+  start = Time.monotonic.total_nanoseconds
+  result = fn.call
+  duration = (Time.monotonic.total_nanoseconds - start).to_i64
+  puts "(#{duration}): #{result}"
+end
+
+print "part_1 "
+run ->{ part_1 }
+print "part_2 "
+run ->{ part_2 }

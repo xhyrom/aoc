@@ -2,4 +2,12 @@ local function {func_name}()
     return ""
 end
 
-print("{func_name}:", {func_name}())
+local function run(fun)
+    local start = os.clock()
+    local result = fun()
+    local duration = math.floor((os.clock() - start) * 1e9)
+    print(string.format("(%d): %s", duration, result))
+end
+
+io.write("{func_name} ")
+run({func_name})

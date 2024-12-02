@@ -2,4 +2,12 @@ def {func_name}
   return ""
 end
 
-puts "{func_name}: #{{func_name}}"
+def run(fn)
+  start = Time.monotonic.total_nanoseconds
+  result = fn.call
+  duration = (Time.monotonic.total_nanoseconds - start).to_i64
+  puts "(#{duration}): #{result}"
+end
+
+print "{func_name} "
+run ->{ {func_name} }

@@ -1,10 +1,19 @@
 function part_1() {
-
+    return "";
 }
 
 function part_2() {
-
+    return "";
 }
 
-console.log("part_1: ", part_1());
-console.log("part_2: ", part_2());
+function run(fun) {
+    const start = process.hrtime.bigint();
+    const result = fun();
+    const duration = process.hrtime.bigint() - start;
+    console.log(`(${duration}): ${result}`);
+}
+
+process.stdout.write("part_1 ");
+run(part_1);
+process.stdout.write("part_2 ");
+run(part_2);
