@@ -11,6 +11,7 @@ class LanguageConfig(NamedTuple):
 
 class Language(Enum):
     PYTHON = LanguageConfig("python", "py")
+    CRYSTAL = LanguageConfig("crystal", "cr", ["crystal run {file}"])
     GO = LanguageConfig("go", "go", ["go run {file}"])
     JAVA = LanguageConfig("java", "java", ["java {file}"])
     JAVASCRIPT = LanguageConfig(
