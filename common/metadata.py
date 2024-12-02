@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from json import dumps, loads
-from os import makedirs
+from os import makedirs, walk
 
 from common.file import save_to_day
 from common.template import Language
@@ -26,6 +26,18 @@ def save_day_metadata(year: int, day: int, metadata: Metadata) -> None:
     )
 
 
+def detect_day_metadata(year: int, day: int) -> Metadata:
+    path = f"./{year}/{day:02}"
+    extensions = tuple(lang.extension for lang in Language)
+
+    for _, _, files in walk(path):
+        files = [f for f in files if f.endswith(extensions)]
+        if files:
+            return Metadata(Language.from_extension(files[0].split(".")[-1]), files)
+
+    return Metadata(Language.PYTHON, ["first.py", "second.py"])
+
+
 def read_day_metadata(year: int, day: int) -> Metadata:
     """Reads the metadata for the given day and year"""
 
@@ -37,4 +49,4 @@ def read_day_metadata(year: int, day: int) -> Metadata:
 
             return Metadata(lang, **obj)
     except FileNotFoundError:
-        return Metadata(Language.PYTHON, ["first.py", "second.py"])
+        return detect_day_metadata(year, day)

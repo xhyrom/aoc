@@ -45,6 +45,14 @@ class Language(Enum):
     def from_name(cls, name: str) -> "Language":
         return cls[name.upper()]
 
+    @classmethod
+    def from_extension(cls, extension: str) -> "Language":
+        for lang in cls:
+            if lang.extension == extension:
+                return lang
+
+        return cls.PYTHON
+
 
 def get_template(language: Language, func_name: str | None = None) -> str:
     template_path = (
