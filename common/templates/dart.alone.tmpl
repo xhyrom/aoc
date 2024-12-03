@@ -1,0 +1,17 @@
+import 'dart:io';
+
+String {func_name}() {
+  return "";
+}
+
+void run<T>(T Function() fn) {
+  final start = DateTime.now().microsecondsSinceEpoch;
+  final result = fn();
+  final duration = DateTime.now().microsecondsSinceEpoch - start;
+  print("($duration): $result");
+}
+
+void main() {
+  stdout.write("{func_name} ");
+  run({func_name});
+}

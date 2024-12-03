@@ -1,0 +1,23 @@
+import 'dart:io';
+
+String part_1() {
+  return "";
+}
+
+String part_2() {
+  return "";
+}
+
+void run<T>(T Function() fn) {
+  final start = DateTime.now().microsecondsSinceEpoch;
+  final result = fn();
+  final duration = DateTime.now().microsecondsSinceEpoch - start;
+  print("($duration): $result");
+}
+
+void main() {
+  stdout.write("part_1 ");
+  run(part_1);
+  stdout.write("part_2 ");
+  run(part_2);
+}
