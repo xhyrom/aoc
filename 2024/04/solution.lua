@@ -3,7 +3,7 @@ local function valid_position(r, c, grid)
 end
 
 local function part_1()
-    local file = io.open("e1.input.txt", "r")
+    local file = io.open("input.txt", "r")
     if not file then return nil end
 
     local grid = {}
