@@ -8,15 +8,17 @@ def concatenate(a: int, b: int) -> int:
         temp //= 10
         digits += 1
 
-    return a * (10 ** digits) + b
+    return a * (10**digits) + b
+
 
 def create_equation(line: str) -> tuple[list[int], int]:
     result, *numbers = line.split()
     numbers = [int(x) for x in numbers]
 
-    return numbers, int(result[0:-1])
+    return numbers, int(result[:-1])
 
-def evaluate(numbers: list[int], operators: tuple[str, ...]) -> int:
+
+def evaluate(numbers: list[int], operators: tuple[str, ...], solution: int) -> int:
     result = numbers[0]
 
     for i, operator in enumerate(operators):
@@ -28,7 +30,11 @@ def evaluate(numbers: list[int], operators: tuple[str, ...]) -> int:
             case "||":
                 result = concatenate(result, numbers[i + 1])
 
+        if result > solution:
+            return -1
+
     return result
+
 
 def part_1() -> int:
     equations = map(create_equation, open("input.txt").read().splitlines())
@@ -36,11 +42,12 @@ def part_1() -> int:
     total = 0
     for numbers, result in equations:
         for operators in product(["+", "*"], repeat=len(numbers) - 1):
-            if evaluate(numbers, operators) == result:
+            if evaluate(numbers, operators, result) == result:
                 total += result
                 break
 
     return total
+
 
 def part_2() -> int:
     equations = map(create_equation, open("input.txt").read().splitlines())
@@ -48,7 +55,7 @@ def part_2() -> int:
     total = 0
     for numbers, result in equations:
         for operators in product(["+", "*", "||"], repeat=len(numbers) - 1):
-            if evaluate(numbers, operators) == result:
+            if evaluate(numbers, operators, result) == result:
                 total += result
                 break
 
