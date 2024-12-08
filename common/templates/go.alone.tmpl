@@ -12,7 +12,7 @@ func {func_name}() string {
 //go:linkname nanotime runtime.nanotime
 func nanotime() int64
 
-func run(fun func() string) {
+func run[T any](fun func() T) {
 	start := nanotime()
 	result := fun()
 	duration := nanotime() - start
