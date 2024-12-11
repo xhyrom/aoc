@@ -1,52 +1,52 @@
 [
   {
     "day": 10,
-    "both": 14308,
-    "first": 989
+    "both": 40604,
+    "first": 1059
   },
   {
     "day": 9,
-    "both": 38412,
-    "first": 10503
+    "both": 43643,
+    "first": 9943
   },
   {
     "day": 8,
-    "both": 52531,
-    "first": 2302
+    "both": 55344,
+    "first": 2360
   },
   {
     "day": 7,
-    "both": 62558,
-    "first": 3221
+    "both": 65276,
+    "first": 3285
   },
   {
     "day": 6,
-    "both": 61804,
-    "first": 21441
+    "both": 63715,
+    "first": 21924
   },
   {
     "day": 5,
-    "both": 84733,
-    "first": 10788
+    "both": 86732,
+    "first": 11031
   },
   {
     "day": 4,
-    "both": 104292,
-    "first": 8787
+    "both": 106431,
+    "first": 8976
   },
   {
     "day": 3,
-    "both": 131218,
-    "first": 13919
+    "both": 133511,
+    "first": 14270
   },
   {
     "day": 2,
-    "both": 145853,
-    "first": 35433
+    "both": 148169,
+    "first": 36038
   },
   {
     "day": 1,
-    "both": 206390,
-    "first": 14589
+    "both": 209464,
+    "first": 14920
   }
 ]
