@@ -80,7 +80,7 @@ def part_1() -> Any:
 
 
 def part_2() -> Any:
-    grid: Grid = [list(x) for x in open("e1.input.txt").read().splitlines()]
+    grid: Grid = [list(x) for x in open("input.txt").read().splitlines()]
     regions = find_all_regions(grid)
 
     result = 0
