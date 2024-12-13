@@ -17,8 +17,8 @@ def solve(ax, ay, bx, by, px, py) -> int:
     Solves a 2x2 system of linear equations using matrix inversion method.
 
     The system of equations is:
-        ax + by = px
-        bx + ay = py
+        aa_x + bb_x = px
+        aa_y + bb_y = py
 
     e. g.
         94a + 22b = 8400
