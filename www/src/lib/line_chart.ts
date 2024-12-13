@@ -1,5 +1,5 @@
 import ApexCharts from "apexcharts";
-import { secondsToHumanReadable } from "./common";
+import { secondsToHumanReadable, yearsBetween } from "./common";
 
 class Chart extends HTMLElement {
   constructor() {
@@ -19,19 +19,30 @@ class Chart extends HTMLElement {
         categories: Array.from({ length: 25 }, (_, i) => `Day ${i + 1}`),
       },
       colors: [
-        "#008FFB",
-        "#00E396",
-        "#FEB019",
-        "#f514f1",
-        "#775DD0",
-        "#546E7A",
-        "#26a69a",
-        "#29388c",
-        "#fc0303",
+        "#008FFB", // Light Blue
+        "#00E396", // Green
+        "#FEB019", // Yellow
+        "#f514f1", // Pink
+        "#775DD0", // Purple
+        "#546E7A", // Gray-Blue
+        "#26a69a", // Teal
+        "#29388c", // Navy Blue
+        "#fc0303", // Red
+        "#ff5733", // Orange
+        "#33ff57", // Lime Green
+        "#5733ff", // Indigo
+        "#ffd700", // Gold
+        "#ff1493", // Deep Pink
+        "#00ced1", // Dark Turquoise
+        "#7fffd4", // Aquamarine
+        "#d2691e", // Chocolate
+        "#b22222", // Firebrick
+        "#4b0082", // Indigo
+        "#adff2f", // Green Yellow
       ],
       stroke: {
         curve: "smooth",
-        width: Array.from({ length: 9 }, (_, i) => i + 2015).map((year) =>
+        width: yearsBetween(2015).map((year) =>
           year == new Date().getFullYear() ? 5 : 2,
         ),
       },
