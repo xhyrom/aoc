@@ -30,7 +30,7 @@ def solve(ax, ay, bx, by, px, py) -> int:
     https://en.m.wikipedia.org/wiki/System_of_linear_equations#Matrix_solution
     """
 
-    det = ax * by - bx * ay
+    det = ax * by - ay * bx
     A_inverse = [
         [Fraction(by, det), Fraction(-bx, det)],
         [Fraction(-ay, det), Fraction(ax, det)],
