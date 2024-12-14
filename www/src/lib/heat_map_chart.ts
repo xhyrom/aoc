@@ -6,6 +6,14 @@ class Chart extends HTMLElement {
     super();
 
     const series = JSON.parse(atob(this.dataset.series!));
+
+    const averages = calculateDailyAverages(series);
+
+    series.unshift({
+      name: "Average",
+      data: averages,
+    });
+
     const chart = new ApexCharts(document.getElementById(this.dataset.id!), {
       chart: {
         type: "heatmap",
@@ -63,7 +71,6 @@ class Chart extends HTMLElement {
       },
       responsive: [
         {
-          // set breakpoint for small devices and also disable data labels
           breakpoint: 480,
           options: {
             dataLabels: {
@@ -78,7 +85,6 @@ class Chart extends HTMLElement {
           },
         },
         {
-          // breakpoint from 480 up
           breakpoint: 768,
           options: {
             dataLabels: {
@@ -101,6 +107,10 @@ class Chart extends HTMLElement {
       dataLabels: {
         enabled: true,
         formatter: secondsToHumanReadable,
+        style: {
+          fontSize: "11px",
+          fontFamily: "monospace",
+        },
       },
       xaxis: {
         categories: Array.from({ length: 25 }, (_, i) => `Day ${i + 1}`),
@@ -115,5 +125,30 @@ class Chart extends HTMLElement {
     chart.render();
   }
 }
+
+const calculateDailyAverages = (series: { data: number[] }[]): number[] => {
+  const numDays = series[0]!.data.length;
+  const averages = [];
+
+  for (let day = 0; day < numDays; day++) {
+    let sum = 0;
+    let count = 0;
+
+    for (const serie of series) {
+      if (
+        serie.data[day] !== undefined &&
+        serie.data[day] !== null &&
+        serie.data[day]! > 0
+      ) {
+        sum += serie.data[day]!;
+        count++;
+      }
+    }
+
+    averages.push(count > 0 ? Number((sum / count).toFixed(2)) : 0);
+  }
+
+  return averages;
+};
 
 customElements.define("aoc-heat-map-chart", Chart);

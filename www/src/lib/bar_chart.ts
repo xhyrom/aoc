@@ -26,10 +26,17 @@ class Chart extends HTMLElement {
       {
         name: "First star",
         data: selectedData.data.map((e: any) => e.first).reverse(),
+        type: "bar",
       },
       {
         name: "Both stars",
         data: selectedData.data.map((e: any) => e.both).reverse(),
+        type: "bar",
+      },
+      {
+        name: "Trend",
+        data: createSlopePoints(selectedData),
+        type: "line",
       },
     ];
 
@@ -44,7 +51,6 @@ class Chart extends HTMLElement {
       },
       responsive: [
         {
-          // set breakpoint for small devices and also disable data labels
           breakpoint: 480,
           options: {
             dataLabels: {
@@ -68,7 +74,6 @@ class Chart extends HTMLElement {
           },
         },
         {
-          // breakpoint from 480 up
           breakpoint: 768,
           options: {
             dataLabels: {
@@ -98,12 +103,22 @@ class Chart extends HTMLElement {
           dataLabels: {
             total: {
               enabled: true,
+              style: {
+                fontSize: "11px",
+                fontFamily: "monospace",
+              },
             },
           },
         },
       },
       dataLabels: {
+        enabled: true,
+        enabledOnSeries: [0, 1],
         formatter: numberFormatter,
+        style: {
+          fontSize: "11px",
+          fontFamily: "monospace",
+        },
       },
       tooltip: {
         shared: true,
@@ -117,7 +132,11 @@ class Chart extends HTMLElement {
           formatter: numberFormatter,
         },
       },
-      colors: ["#40403d", "#f5db14"],
+      stroke: {
+        width: [0, 0, 3],
+        curve: "smooth",
+      },
+      colors: ["#40403d", "#f5db14", "#ff0000"],
     });
 
     this.chart.render();
@@ -130,15 +149,32 @@ class Chart extends HTMLElement {
       {
         name: "First star",
         data: selectedData.data.map((e: any) => e.first).reverse(),
+        type: "bar",
       },
       {
         name: "Both stars",
         data: selectedData.data.map((e: any) => e.both).reverse(),
+        type: "bar",
+      },
+      {
+        name: "Trend",
+        data: createSlopePoints(selectedData),
+        type: "line",
       },
     ];
 
     this.chart.updateSeries(series);
   }
 }
+
+const createSlopePoints = (data) => {
+  const points = [];
+  const maxY = Math.max(...data.data.map((e: any) => e.first + e.both));
+  for (let x = 0; x < 25; x++) {
+    const y = maxY * Math.exp(-0.15 * x);
+    points.push(Math.max(0, y));
+  }
+  return points;
+};
 
 customElements.define("aoc-bar-chart", Chart);

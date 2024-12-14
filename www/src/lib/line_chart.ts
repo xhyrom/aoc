@@ -6,6 +6,13 @@ class Chart extends HTMLElement {
     super();
 
     const series = JSON.parse(atob(this.dataset.series!));
+
+    series.push({
+      name: "Average",
+      data: calculateDailyAverages(series),
+      type: "line",
+    });
+
     const chart = new ApexCharts(document.getElementById(this.dataset.id!), {
       chart: {
         type: "line",
@@ -29,7 +36,6 @@ class Chart extends HTMLElement {
         "#29388c", // Navy Blue
         "#fc0303", // Red
         "#ff5733", // Orange
-        "#33ff57", // Lime Green
         "#5733ff", // Indigo
         "#ffd700", // Gold
         "#ff1493", // Deep Pink
@@ -42,18 +48,21 @@ class Chart extends HTMLElement {
       ],
       stroke: {
         curve: "smooth",
-        width: yearsBetween(2015).map((year) =>
-          year == new Date().getFullYear() ? 5 : 2,
+        width: [
+          ...yearsBetween(2015).map((year) =>
+            year == new Date().getFullYear() ? 5 : 2,
+          ),
+          2,
+        ],
+        dashArray: series.map((_, index) =>
+          index === series.length - 1 ? 5 : 0,
         ),
       },
       legend: {
         tooltipHoverFormatter: (val, opts) => {
           const value =
             opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex];
-          const hours = Math.floor(value / 60 / 60);
-          const minutes = Math.floor((value - hours * 60 * 60) / 60);
-          const seconds = value - hours * 60 * 60 - minutes * 60;
-          return val + " - " + `${hours}h ${minutes}m ${seconds}s` + "";
+          return value ? val + " - " + secondsToHumanReadable(value) + "" : val;
         },
       },
       tooltip: {
@@ -75,6 +84,27 @@ class Chart extends HTMLElement {
     chart.render();
   }
 }
+
+const calculateDailyAverages = (series: { data: number[] }[]): number[] => {
+  const numDays = series[0]!.data.length;
+  const averages = [];
+
+  for (let day = 0; day < numDays; day++) {
+    let sum = 0;
+    let count = 0;
+
+    for (const serie of series) {
+      if (serie.data[day] !== undefined && serie.data[day] !== null) {
+        sum += serie.data[day]!;
+        count++;
+      }
+    }
+
+    averages.push(count > 0 ? Number((sum / count).toFixed(2)) : 0);
+  }
+
+  return averages;
+};
 
 const minInSeries = (series: { data: number[] }[]) => {
   let min = Infinity;

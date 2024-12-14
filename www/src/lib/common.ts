@@ -18,7 +18,7 @@ export const secondsToHumanReadable = (value: number): string => {
 };
 
 export const numberFormatter = (value: number): string => {
-  if (value === undefined || Number.isNaN(value)) {
+  if (value === undefined || Number.isNaN(value) || value == 0) {
     return "??";
   }
 
