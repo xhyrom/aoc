@@ -167,7 +167,7 @@ class Chart extends HTMLElement {
   }
 }
 
-const createSlopePoints = (data) => {
+const createSlopePoints = (data: any) => {
   const points = [];
   const maxY = Math.max(...data.data.map((e: any) => e.first + e.both));
   for (let x = 0; x < 25; x++) {

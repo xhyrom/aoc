@@ -54,12 +54,12 @@ class Chart extends HTMLElement {
           ),
           2,
         ],
-        dashArray: series.map((_, index) =>
+        dashArray: series.map((_: any, index: any) =>
           index === series.length - 1 ? 5 : 0,
         ),
       },
       legend: {
-        tooltipHoverFormatter: (val, opts) => {
+        tooltipHoverFormatter: (val: string, opts: any) => {
           const value =
             opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex];
           return value ? val + " - " + secondsToHumanReadable(value) + "" : val;
