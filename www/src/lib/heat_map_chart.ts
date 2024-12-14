@@ -112,6 +112,9 @@ class Chart extends HTMLElement {
           fontFamily: "monospace",
         },
       },
+      legend: {
+        position: "bottom",
+      },
       xaxis: {
         categories: Array.from({ length: 25 }, (_, i) => `Day ${i + 1}`),
       },
