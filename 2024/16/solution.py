@@ -1,3 +1,4 @@
+from collections import deque
 from enum import Enum
 from heapq import heappop, heappush
 
@@ -38,8 +39,8 @@ def find_point(grid: Grid, type: str) -> Position:
     raise ValueError(f"Can't find point {type}")
 
 
-def part_1() -> int:
-    grid = [list(line) for line in open("input.txt").read().splitlines()]
+def part_1(file: str = "input.txt") -> int:
+    grid = [list(line) for line in open(file).read().splitlines()]
     start_row, start_col = find_point(grid, "S")
     end_row, end_col = find_point(grid, "E")
 
@@ -67,36 +68,33 @@ def part_1() -> int:
         ):
             heappush(pq, (score + 1, new_r, new_c, facing))
 
-        new_facing = facing.clockwise()
-        heappush(pq, (score + 1000, r, c, new_facing))
-
-        new_facing = facing.counterclockwise()
-        heappush(pq, (score + 1000, r, c, new_facing))
+        for new_facing in (facing.clockwise(), facing.counterclockwise()):
+            heappush(pq, (score + 1000, r, c, new_facing))
 
     return -1
 
 
-def part_2() -> int:
-    grid = [list(line) for line in open("input.txt").read().splitlines()]
+def part_2(file: str = "input.txt") -> int:
+    grid = [list(line) for line in open(file).read().splitlines()]
     start_row, start_col = find_point(grid, "S")
     end_row, end_col = find_point(grid, "E")
 
-    pq = [(0, start_row, start_col, Face.EAST, [])]
+    min_score = part_1(file)
+
+    queue = deque([(0, start_row, start_col, Face.EAST, {(start_row, start_col)})])
 
     seen: dict[tuple[*Position, Face], float] = {}
-    min_score = float("inf")
-    tiles: dict[float, set[Position]] = {}
+    tiles: set[Position] = set({(start_row, start_col)})
 
-    while pq:
-        score, r, c, facing, path = heappop(pq)
+    while queue:
+        score, r, c, facing, path = queue.popleft()
+
+        if score > min_score:
+            continue
 
         if (r, c) == (end_row, end_col):
-            if score <= min_score:
-                min_score = score
-                if min_score not in tiles:
-                    tiles[min_score] = set()
-
-                tiles[min_score].update(path + [(r, c)])
+            tiles.update(path | {(r, c)})
+            continue
 
         if seen.get((r, c, facing), float("inf")) < score:
             continue
@@ -109,23 +107,11 @@ def part_2() -> int:
             0 <= new_r < len(grid)
             and 0 <= new_c < len(grid[0])
             and grid[new_r][new_c] != "#"
+            and (new_r, new_c) not in path
         ):
-            heappush(pq, (score + 1, new_r, new_c, facing, path + [(r, c)]))
+            queue.append((score + 1, new_r, new_c, facing, path | {(new_r, new_c)}))
 
-        heappush(
-            pq,
-            (score + 1000, r, c, facing.clockwise(), path + [(r, c)]),
-        )
+        for new_facing in (facing.clockwise(), facing.counterclockwise()):
+            queue.append((score + 1000, r, c, new_facing, path))
 
-        heappush(
-            pq,
-            (
-                score + 1000,
-                r,
-                c,
-                facing.counterclockwise(),
-                path + [(r, c)],
-            ),
-        )
-
-    return len(tiles[min_score])
+    return len(tiles)
