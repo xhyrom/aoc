@@ -4,10 +4,6 @@ from typing import TypeAlias
 Position: TypeAlias = tuple[int, int]
 
 
-def manhattan_distance(r1: int, c1: int, r2: int, c2: int) -> int:
-    return abs(r1 - r2) + abs(c1 - c2)
-
-
 def solve(rows: int, cols: int, obstructions: list[Position]):
     end_row, end_col = rows - 1, cols - 1
 
