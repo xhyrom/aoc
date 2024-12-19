@@ -1,38 +1,45 @@
 from dataclasses import dataclass
 from typing import Any
 
+from common.format import format_time
+
 
 @dataclass
 class Run:
     func_name: str
     file_name: str
-    result: Any
-    time_taken: float
 
     def beauty_func_name(self) -> str:
         return self.func_name.replace("_", " ").capitalize()
 
-    def time_taken_ms(self) -> float:
-        return self.time_taken / 10**6
+
+@dataclass
+class SimpleRun(Run):
+    result: Any
+    time_taken: float
 
     def time_taken_formatted(self) -> str:
-        if self.time_taken < 1000:
-            value = self.time_taken
-            unit = "ns"
-        elif self.time_taken < 1000000:
-            value = self.time_taken / 1000
-            unit = "µs"
-        elif self.time_taken < 1000000000:
-            value = self.time_taken / 1000000
-            unit = "ms"
-        elif self.time_taken < 60000000000:
-            value = self.time_taken / 1000000000
-            unit = "s"
-        else:
-            value = self.time_taken / (60 * 1000000000)
-            unit = "min"
+        return format_time(self.time_taken)
 
-        if abs(value - round(value)) < 0.0001:
-            return f"{int(round(value))} {unit}"
 
-        return f"{value:.3f} {unit}"
+@dataclass
+class BenchRun(Run):
+    times: list[float]
+
+    def __post_init__(self):
+        self.times = sorted(self.times)
+
+    def min(self) -> float:
+        return self.times[0]
+
+    def max(self) -> float:
+        return self.times[-1]
+
+    def avg(self) -> float:
+        return sum(self.times) / len(self.times)
+
+    def p(self, p: float) -> float:
+        return self.times[int(len(self.times) * p)]
+
+    def format_time(self, time: float) -> str:
+        return format_time(time)

@@ -7,6 +7,11 @@ from colorama import Fore, Style
 from environs import Env
 
 from common.aoc import fetch_example, fetch_user_input
+from common.commands.benchmark import (
+    print_overall_summary,
+    print_year_summary,
+    process_day_benchmarks,
+)
 from common.date import current_day, current_year
 from common.file import create_day, save_to_day
 from common.metadata import Metadata, read_day_metadata, save_day_metadata
@@ -89,7 +94,7 @@ def puzzle(year: int, day: int, language: Language, separate: bool) -> None:
 def run(year: int, day: int) -> None:
     metadata = read_day_metadata(year, day)
 
-    for i, run in enumerate(run_day(year, day, metadata)):
+    for i, run in enumerate(run_day(year, day, metadata, benchmark=False)):
         if i > 0:
             click.echo(f"{Fore.LIGHTBLACK_EX}{'─' * 30}{Style.RESET_ALL}")
 
@@ -107,6 +112,64 @@ def run(year: int, day: int) -> None:
         )
 
         click.echo()
+
+
+@cli.command()
+@click.option(
+    "--year",
+    "-y",
+    type=int,
+    help="Year of the puzzle (defaults to current year)",
+    default=current_year(),
+)
+@click.option(
+    "--day",
+    "-d",
+    type=int,
+    help="Day of the puzzle (defaults to current day)",
+    default=current_day(),
+)
+@click.option(
+    "--all-days", "-ad", is_flag=True, help="Benchmark all days in specified year"
+)
+@click.option("--all-years", "-ay", is_flag=True, help="Benchmark all years")
+def bench(year: int, day: int, all_days: bool, all_years: bool) -> None:
+    """Benchmark solution(s) for specified day(s) and year(s)."""
+    years = range(2015, current_year() + 1) if all_years else [year]
+    days = range(1, 26) if all_days else [day]
+
+    total_results = []
+
+    for yr in years:
+        if len(years) > 1 or all_days:
+            click.echo(f"\n{Fore.YELLOW}Benchmarking Year {yr}{Style.RESET_ALL}")
+
+        year_results = []
+
+        for d in days:
+            try:
+                meta = read_day_metadata(yr, d)
+                runs = list(run_day(yr, d, meta, benchmark=True))
+
+                if runs:
+                    day_results = process_day_benchmarks(yr, d, runs)
+                    year_results.extend(day_results)
+
+            except Exception as e:
+                if not (all_days or all_years):
+                    click.echo(
+                        f"{Fore.RED}Error benchmarking Day {d}: {e}{Style.RESET_ALL}"
+                    )
+
+                continue
+
+        if year_results:
+            total_results.extend(year_results)
+            if all_days:
+                print_year_summary(yr, year_results)
+
+    if all_years and total_results:
+        print_overall_summary(total_results)
 
 
 if __name__ == "__main__":

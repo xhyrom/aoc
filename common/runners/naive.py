@@ -3,7 +3,7 @@ from shutil import which
 from subprocess import run
 
 from common.metadata import Metadata
-from common.runners.run import Run
+from common.runners.run import Run, SimpleRun
 from common.template import Language
 
 
@@ -35,7 +35,7 @@ def _bench_and_run(command: str, path: str) -> list[Run]:
 
             result = line.split(":")[1].strip()
             runs.append(
-                Run(
+                SimpleRun(
                     f"part {part_number}",
                     path,
                     None if not result or result == "undefined" else result,
