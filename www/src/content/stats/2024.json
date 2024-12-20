@@ -1,97 +1,102 @@
 [
   {
+    "day": 20,
+    "both": 4487,
+    "first": 2786
+  },
+  {
     "day": 19,
-    "both": 20521,
-    "first": 2615
+    "both": 21384,
+    "first": 2559
   },
   {
     "day": 18,
-    "both": 24823,
-    "first": 609
+    "both": 25072,
+    "first": 620
   },
   {
     "day": 17,
-    "both": 20223,
-    "first": 9272
+    "both": 20430,
+    "first": 9269
   },
   {
     "day": 16,
-    "both": 23658,
-    "first": 5431
+    "both": 23815,
+    "first": 5439
   },
   {
     "day": 15,
-    "both": 28521,
-    "first": 8952
+    "both": 28651,
+    "first": 8970
   },
   {
     "day": 14,
-    "both": 38310,
-    "first": 4315
+    "both": 38436,
+    "first": 4331
   },
   {
     "day": 13,
-    "both": 40397,
-    "first": 4888
+    "both": 40507,
+    "first": 4899
   },
   {
     "day": 12,
-    "both": 38764,
-    "first": 10548
+    "both": 38857,
+    "first": 10587
   },
   {
     "day": 11,
-    "both": 52375,
-    "first": 8462
+    "both": 52491,
+    "first": 8484
   },
   {
     "day": 10,
-    "both": 57238,
-    "first": 1242
+    "both": 57359,
+    "first": 1245
   },
   {
     "day": 9,
-    "both": 55907,
-    "first": 10849
+    "both": 56021,
+    "first": 10865
   },
   {
     "day": 8,
-    "both": 66183,
-    "first": 2733
+    "both": 66313,
+    "first": 2723
   },
   {
     "day": 7,
-    "both": 76633,
-    "first": 3990
+    "both": 76769,
+    "first": 3991
   },
   {
     "day": 6,
-    "both": 73084,
-    "first": 25146
+    "both": 73186,
+    "first": 25207
   },
   {
     "day": 5,
-    "both": 98191,
-    "first": 12623
+    "both": 98327,
+    "first": 12629
   },
   {
     "day": 4,
-    "both": 119200,
-    "first": 10214
+    "both": 119365,
+    "first": 10236
   },
   {
     "day": 3,
-    "both": 147928,
-    "first": 15977
+    "both": 148123,
+    "first": 15978
   },
   {
     "day": 2,
-    "both": 163042,
-    "first": 39983
+    "both": 163222,
+    "first": 40050
   },
   {
     "day": 1,
-    "both": 229273,
-    "first": 16685
+    "both": 229507,
+    "first": 16704
   }
 ]
