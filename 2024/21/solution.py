@@ -1,101 +1,156 @@
+from collections import deque
+from enum import Enum
 from functools import cache
-from itertools import permutations
-from typing import Optional
+from typing import Any, TypeAlias
 
-Position = tuple[int, int]
+Grid = list[list[str]]
+Position: TypeAlias = tuple[int, int]
 
-numeric_keypad = {
-    "7": (0, 0),  # (row, col)
-    "8": (0, 1),
-    "9": (0, 2),
-    "4": (1, 0),
-    "5": (1, 1),
-    "6": (1, 2),
-    "1": (2, 0),
-    "2": (2, 1),
-    "3": (2, 2),
-    "0": (3, 1),
-    "A": (3, 2),
-}
 
-directional_keypad = {
-    "^": (0, 1),
-    "A": (0, 2),
-    "<": (1, 0),
-    "v": (1, 1),
-    ">": (1, 2),
-}  # (row, col)
+numeric_keypad: Grid = [
+    ["7", "8", "9"],
+    ["4", "5", "6"],
+    ["1", "2", "3"],
+    ["#", "0", "A"],
+]
+directional_keypad: Grid = [["#", "^", "A"], ["<", "v", ">"]]
 
-DIRECTIONS = {"^": (-1, 0), ">": (0, 1), "v": (1, 0), "<": (0, -1)}  # (row, col)
+
+class Face(Enum):
+    NORTH = (0, "^")
+    EAST = (1, ">")
+    SOUTH = (2, "v")
+    WEST = (3, "<")
+
+    def symbol(self) -> str:
+        return self.value[1]
+
+    @classmethod
+    def from_delta(cls, dr: int, dc: int) -> "Face":
+        match (dr, dc):
+            case (0, 1):
+                return cls.EAST
+            case (1, 0):
+                return cls.SOUTH
+            case (0, -1):
+                return cls.WEST
+            case (-1, 0):
+                return cls.NORTH
+            case _:
+                raise ValueError(f"Invalid delta: ({dr}, {dc})")
+
+
+def find_paths(
+    grid: Grid,
+    start_row: int,
+    start_col: int,
+    end_row: int,
+    end_col: int,
+):
+    queue = deque([(start_row, start_col, Face.NORTH, [])])
+    paths = []
+    min_length = float("inf")
+
+    while queue:
+        r, c, face, path = queue.popleft()
+
+        if len(path) > min_length:
+            continue
+
+        if (r, c) == (end_row, end_col):
+            if len(path) <= min_length:
+                min_length = len(path)
+                paths.append("".join(p[2] for p in path) + "A")
+
+            continue
+
+        for dr, dc in ((0, 1), (1, 0), (0, -1), (-1, 0)):
+            new_r, new_c = r + dr, c + dc
+            if (
+                0 <= new_r < len(grid)
+                and 0 <= new_c < len(grid[0])
+                and grid[new_r][new_c] != "#"
+            ):
+                face = Face.from_delta(dr, dc)
+
+                new_path = path + [(new_r, new_c, face.symbol())]
+                queue.append((new_r, new_c, face, new_path))
+
+    return paths
 
 
 @cache
-def get_sequence(
-    sequence: str,
-    depth: int = 2,
-    use_directional: bool = False,
-    current: Optional[Position] = None,
-) -> int:
-    if not sequence:
-        return 0
+def directional_path_length(sequence: str, depth: int) -> int:
+    if depth == 0:
+        return len(sequence)
 
-    keypad = directional_keypad if use_directional else numeric_keypad
+    start_row, start_col = find_point(directional_keypad, "A")
+    total = 0
 
-    row, col = current or keypad["A"]
-    target_row, target_col = keypad[sequence[0]]
+    for char in sequence:
+        end_row, end_col = find_point(directional_keypad, char)
 
-    dr, dc = target_row - row, target_col - col
-    moves = "v" * dr if dr > 0 else "^" * (-dr)
-    moves += ">" * dc if dc > 0 else "<" * (-dc)
-
-    if not depth:
-        return (
-            len(moves)
-            + 1
-            + get_sequence(
-                sequence[1:], depth, use_directional, (target_row, target_col)
-            )
+        paths = find_paths(
+            directional_keypad,
+            start_row,
+            start_col,
+            end_row,
+            end_col,
         )
+        total += min(directional_path_length(path, depth - 1) for path in paths)
 
-    candidates = []
-    for permutation in set(permutations(moves)):
-        row, col = current or keypad["A"]
+        start_row, start_col = end_row, end_col
 
-        for move in permutation:
-            dr, dc = DIRECTIONS[move]
-            row, col = row + dr, col + dc
-
-            if (row, col) not in keypad.values():
-                break
-        else:
-            candidates.append(get_sequence("".join(permutation) + "A", depth - 1, True))
-
-    min_len = min(candidates) if candidates else -1
-    assert min_len > 0, f"Invalid sequence: {sequence}"
-
-    return min_len + get_sequence(
-        sequence[1:], depth, use_directional, (target_row, target_col)
-    )
+    return total
 
 
-def solve(codes: list[str], depth: int) -> int:
+def sequence_length(sequence: str, depth: int) -> int:
+    start_row, start_col = find_point(numeric_keypad, "A")
+    total = 0
+
+    for char in sequence:
+        end_row, end_col = find_point(numeric_keypad, char)
+
+        paths = find_paths(numeric_keypad, start_row, start_col, end_row, end_col)
+        total += min(directional_path_length(path, depth) for path in paths)
+
+        start_row, start_col = end_row, end_col
+
+    return total
+
+
+def find_point(grid: Grid, type: str) -> Position:
+    return next(find_points(grid, type))
+
+
+def find_points(grid: Grid, type: str):
+    for row in range(len(grid)):
+        for col in range(len(grid[0])):
+            if grid[row][col] == type:
+                yield row, col
+
+
+def part_1() -> Any:
+    codes = [line for line in open("input.txt").read().splitlines()]
     result = 0
 
     for code in codes:
-        id = int("".join(c for c in code if c.isdigit()))
-        sequence_length = get_sequence(code, depth=depth)
-        result += id * sequence_length
+        id = int("".join([char for char in code if char.isdigit()]))
+        length = sequence_length(code, 2)
+
+        result += id * length
 
     return result
 
 
-def part_1() -> int:
-    codes = open("input.txt").read().splitlines()
+def part_2() -> Any:
+    codes = [line for line in open("input.txt").read().splitlines()]
+    result = 0
 
-    return solve(codes, 2)
+    for code in codes:
+        id = int("".join([char for char in code if char.isdigit()]))
+        length = sequence_length(code, 25)
 
+        result += id * length
 
-def part_2() -> int:
-    codes = open("input.txt").read().splitlines()
-
-    return solve(codes, 25)
+    return result
