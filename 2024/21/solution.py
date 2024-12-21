@@ -1,6 +1,6 @@
-from collections import deque
 from enum import Enum
 from functools import cache
+from itertools import permutations
 from typing import Any, TypeAlias
 
 Grid = list[list[str]]
@@ -14,6 +14,8 @@ numeric_keypad: Grid = [
     ["#", "0", "A"],
 ]
 directional_keypad: Grid = [["#", "^", "A"], ["<", "v", ">"]]
+
+DIRECTIONS = {"^": (-1, 0), ">": (0, 1), "v": (1, 0), "<": (0, -1)}  # (row, col)
 
 
 class Face(Enum):
@@ -47,36 +49,24 @@ def find_paths(
     end_row: int,
     end_col: int,
 ):
-    queue = deque([(start_row, start_col, Face.NORTH, [])])
-    paths = []
-    min_length = float("inf")
+    dr, dc = end_row - start_row, end_col - start_col
+    moves = "v" * dr if dr > 0 else "^" * (-dr)
+    moves += ">" * dc if dc > 0 else "<" * (-dc)
 
-    while queue:
-        r, c, face, path = queue.popleft()
+    candidates = []
+    for permutation in set(permutations(moves)):
+        row, col = start_row, start_col
 
-        if len(path) > min_length:
-            continue
+        for move in permutation:
+            dr, dc = DIRECTIONS[move]
+            row, col = row + dr, col + dc
 
-        if (r, c) == (end_row, end_col):
-            if len(path) <= min_length:
-                min_length = len(path)
-                paths.append("".join(p[2] for p in path) + "A")
+            if grid[row][col] == "#":
+                break
+        else:
+            candidates.append("".join(permutation) + "A")
 
-            continue
-
-        for dr, dc in ((0, 1), (1, 0), (0, -1), (-1, 0)):
-            new_r, new_c = r + dr, c + dc
-            if (
-                0 <= new_r < len(grid)
-                and 0 <= new_c < len(grid[0])
-                and grid[new_r][new_c] != "#"
-            ):
-                face = Face.from_delta(dr, dc)
-
-                new_path = path + [(new_r, new_c, face.symbol())]
-                queue.append((new_r, new_c, face, new_path))
-
-    return paths
+    return candidates
 
 
 @cache
