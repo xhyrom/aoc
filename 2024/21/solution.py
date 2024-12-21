@@ -1,6 +1,5 @@
 from enum import Enum
 from functools import cache
-from itertools import permutations
 from typing import Any, TypeAlias
 
 Grid = list[list[str]]
@@ -50,21 +49,23 @@ def find_paths(
     end_col: int,
 ):
     dr, dc = end_row - start_row, end_col - start_col
-    moves = "v" * dr if dr > 0 else "^" * (-dr)
-    moves += ">" * dc if dc > 0 else "<" * (-dc)
+    vertical_moves = "v" * dr if dr > 0 else "^" * (-dr)
+    horizontal_moves = ">" * dc if dc > 0 else "<" * (-dc)
 
     candidates = []
-    for permutation in set(permutations(moves)):
-        row, col = start_row, start_col
 
-        for move in permutation:
+    for path in (
+        vertical_moves + horizontal_moves,
+        horizontal_moves + vertical_moves,
+    ):
+        row, col = start_row, start_col
+        for move in path:
             dr, dc = DIRECTIONS[move]
             row, col = row + dr, col + dc
-
             if grid[row][col] == "#":
                 break
         else:
-            candidates.append("".join(permutation) + "A")
+            candidates.append(path + "A")
 
     return candidates
 
