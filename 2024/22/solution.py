@@ -1,28 +1,27 @@
 from collections import deque
-from typing import Any
 
 
-def sequence(num: int) -> int:
+def evolve(num: int) -> int:
     num = (num ^ (num * 64)) % 16777216
     num = (num ^ (num // 32)) % 16777216
     num = (num ^ (num * 2048)) % 16777216
     return num
 
 
-def part_1() -> Any:
+def part_1() -> int:
     buyers = map(int, open("input.txt").read().splitlines())
-    result = []
+    result = 0
 
     for buyer in buyers:
         for _ in range(2000):
-            buyer = sequence(buyer)
+            buyer = evolve(buyer)
 
-        result.append(buyer)
+        result += buyer
 
-    return sum(result)
+    return result
 
 
-def part_2() -> Any:
+def part_2() -> int:
     buyers = map(int, open("input.txt").read().splitlines())
     delta = {}
 
@@ -31,7 +30,7 @@ def part_2() -> Any:
         seen = set()
 
         for _ in range(2000):
-            new_buyer = sequence(buyer)
+            new_buyer = evolve(buyer)
 
             initial_last_digit = buyer % 10
             next_last_digit = new_buyer % 10
@@ -41,7 +40,6 @@ def part_2() -> Any:
                 pattern = tuple(diff)
                 if pattern not in seen:
                     seen.add(pattern)
-
                     delta[pattern] = delta.get(pattern, 0) + next_last_digit
 
             buyer = new_buyer
