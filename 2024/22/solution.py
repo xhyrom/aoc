@@ -2,9 +2,14 @@ from collections import deque
 
 
 def evolve(num: int) -> int:
-    num = (num ^ (num * 64)) % 16777216
-    num = (num ^ (num // 32)) % 16777216
-    num = (num ^ (num * 2048)) % 16777216
+    # equivalent to (num ^ (num * 64)) % 16777216
+    num = (num ^ (num << 6)) & 0xFFFFFF
+
+    # equivalent to (num ^ (num // 32)) % 16777216
+    num = (num ^ (num >> 5)) & 0xFFFFFF
+
+    # equivalent to (num ^ (num * 2048)) % 16777216
+    num = (num ^ (num << 11)) & 0xFFFFFF
     return num
 
 
