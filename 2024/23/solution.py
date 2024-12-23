@@ -42,13 +42,15 @@ def part_1() -> int:
     cliques = []
     bron_kerbosch(set(), set(connections.keys()), set(), connections, cliques)
 
-    candidates = {
-        tuple(comb)
-        for clique in cliques
-        if len(clique) >= 3
-        for comb in combinations(clique, 3)
-        if any(vertex.startswith("t") for vertex in comb)
-    }
+    # fixes order of vertices in cliques, python sets are unordered
+    cliques = [sorted(clique) for clique in cliques]
+
+    candidates = set()
+    for clique in cliques:
+        if len(clique) >= 3:
+            for comb in combinations(clique, 3):
+                if any(vertex.startswith("t") for vertex in comb):
+                    candidates.add(tuple(comb))
 
     return len(candidates)
 
