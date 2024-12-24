@@ -61,7 +61,11 @@ def puzzle(year: int, day: int, language: Language, separate: bool) -> None:
     save = partial(save_to_day, year, day)
 
     save("input.txt", fetch_user_input(year, day))
-    save("e1.input.txt", fetch_example(year, day, 1))
+
+    try:
+        save("e1.input.txt", fetch_example(year, day, 1))
+    except ValueError:
+        pass
 
     if separate:
         save(f"part_1.{language.extension}", get_template(language, "part_1"))
