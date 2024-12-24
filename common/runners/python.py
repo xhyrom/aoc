@@ -1,3 +1,4 @@
+import sys
 from contextlib import contextmanager
 from importlib.util import module_from_spec, spec_from_file_location
 from os import chdir, getcwd
@@ -32,7 +33,11 @@ def _import(year: int, day: int, file: str) -> tuple[ModuleType, str]:
     module = module_from_spec(spec)
 
     with _temporary_cwd(directory):
-        spec.loader.exec_module(module)
+        sys.path.insert(0, directory)
+        try:
+            spec.loader.exec_module(module)
+        finally:
+            sys.path.pop(0)
 
     return module, directory
 
