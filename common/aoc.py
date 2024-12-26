@@ -122,7 +122,7 @@ def __colorize_calendar(html: str) -> str:
         else:
             return match.group(0)
 
-    span_pattern = re.compile(r'<span class="([^"]+)">([^<]*)</span>')
+    span_pattern = re.compile(r'<span class="([^"]+)">(.*?)</span>', re.DOTALL)
     html = span_pattern.sub(replace_span, html)
 
     return html
