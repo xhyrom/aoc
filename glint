@@ -6,7 +6,7 @@ import click
 from colorama import Fore, Style
 from environs import Env
 
-from common.aoc import fetch_example, fetch_user_input
+from common.aoc import fetch_calendar, fetch_example, fetch_user_input
 from common.commands.benchmark import (
     print_overall_summary,
     print_year_summary,
@@ -174,6 +174,24 @@ def bench(year: int, day: int, all_days: bool, all_years: bool) -> None:
 
     if all_years and total_results:
         print_overall_summary(total_results)
+
+
+@cli.command()
+@click.option(
+    "--year",
+    "-y",
+    type=int,
+    help="Year of the advent of code (defaults to current year)",
+    default=current_year(),
+)
+def calendar(year: int) -> None:
+    """Prints the calendar for the specified year."""
+    try:
+        print(fetch_calendar(year))
+    except Exception:
+        click.echo(
+            f"{Fore.RED}Calendar for year {year} is not available{Style.RESET_ALL}"
+        )
 
 
 if __name__ == "__main__":

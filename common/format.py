@@ -19,3 +19,7 @@ def format_time(time: float) -> str:
         return f"{int(round(value))} {unit}"
 
     return f"{value:.3f} {unit}"
+
+
+def rgb_to_ansi(r, g, b):
+    return f"\033[38;2;{r};{g};{b}m"
