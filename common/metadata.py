@@ -17,11 +17,11 @@ class Metadata:
 
 def save_day_metadata(year: int, day: int, metadata: Metadata) -> None:
     """Saves the metadata for the given day and year"""
-    makedirs(f"./{year}/{day:02}/__glint__", exist_ok=True)
+    makedirs(f"./{year}/{day:02}/__jolt__", exist_ok=True)
     save_to_day(
         year,
         day,
-        "__glint__/meta.json",
+        "__jolt__/meta.json",
         dumps(metadata.to_dict()),
     )
 
@@ -42,7 +42,7 @@ def read_day_metadata(year: int, day: int) -> Metadata:
     """Reads the metadata for the given day and year"""
 
     try:
-        with open(f"./{year}/{day:02}/__glint__/meta.json") as f:
+        with open(f"./{year}/{day:02}/__jolt__/meta.json") as f:
             obj = loads(f.read())
             lang = Language.from_name(obj["language"])
             del obj["language"]

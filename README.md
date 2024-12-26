@@ -32,11 +32,11 @@ Replace `<your session token>` with your session token from the [Advent of Code]
 After that, you can use the provided tool to set up the folder and input file for a new day:
 
 ```bash
-./glint
+./jolt
 ```
 
 To run the tests for current day, use:
 
 ```bash
-./glint run
+./jolt run
 ```

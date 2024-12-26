@@ -1,6 +1,6 @@
 .env
 *input.txt
-__glint__/
+__jolt__/
 
 .mypy_cache/
 __pycache__
