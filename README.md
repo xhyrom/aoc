@@ -40,3 +40,20 @@ To run the tests for current day, use:
 ```bash
 ./jolt run
 ```
+
+### Commands
+
+The tool `jolt` provides the following commands:
+
+```bash
+Usage:  [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  bench     Benchmark solution(s) for specified day(s) and year(s).
+  calendar  Prints the calendar for the specified year.
+  puzzle    Create a new puzzle solution template.
+  run       Run solution(s) for specified day and year.
+```

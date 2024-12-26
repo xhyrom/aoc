@@ -46,6 +46,8 @@ def cli(ctx) -> None:
     default=False,
 )
 def puzzle(year: int, day: int, language: Language, separate: bool) -> None:
+    """Create a new puzzle solution template."""
+
     create_day(year, day)
     save_day_metadata(
         year,
@@ -96,6 +98,8 @@ def puzzle(year: int, day: int, language: Language, separate: bool) -> None:
 )
 @click.option("--day", "-d", type=int, help="Day of the puzzle", default=current_day())
 def run(year: int, day: int) -> None:
+    """Run solution(s) for specified day and year."""
+
     metadata = read_day_metadata(year, day)
 
     for i, run in enumerate(run_day(year, day, metadata, benchmark=False)):
@@ -139,6 +143,7 @@ def run(year: int, day: int) -> None:
 @click.option("--all-years", "-ay", is_flag=True, help="Benchmark all years")
 def bench(year: int, day: int, all_days: bool, all_years: bool) -> None:
     """Benchmark solution(s) for specified day(s) and year(s)."""
+
     years = range(2015, current_year() + 1) if all_years else [year]
     days = range(1, 26) if all_days else [day]
 
@@ -186,6 +191,7 @@ def bench(year: int, day: int, all_days: bool, all_years: bool) -> None:
 )
 def calendar(year: int) -> None:
     """Prints the calendar for the specified year."""
+
     try:
         print(fetch_calendar(year))
     except Exception:
