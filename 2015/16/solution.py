@@ -1,4 +1,3 @@
-from typing import Any
 from re import findall
 
 
@@ -31,7 +30,7 @@ def solve(predicate) -> int:
     return -1
 
 
-def part_1() -> Any:
+def part_1() -> int:
     return solve(
         lambda key, value: {
             "akitas": lambda v: v == 0,
@@ -48,7 +47,7 @@ def part_1() -> Any:
     )
 
 
-def part_2() -> Any:
+def part_2() -> int:
     return solve(
         lambda key, value: {
             "akitas": lambda v: v == 0,
