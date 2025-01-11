@@ -73,9 +73,18 @@ class Grid(Generic[T]):
 
     def __check_dimensions(self, point: Point) -> None:
         """Check if a point has the correct number of dimensions"""
-        assert (
-            point.dimensions() == self.dimensions
-        ), "Point dimensions do not match grid dimensions"
+        assert point.dimensions() == self.dimensions, (
+            "Point dimensions do not match grid dimensions"
+        )
+
+    def __iter__(self) -> Generator[Point, None, None]:
+        """Iterate over all points in the grid"""
+        for coords in self.points:
+            yield Point(coords)
+
+    def copy(self) -> "Grid[T]":
+        """Create a copy of the grid"""
+        return Grid(self.dimensions, self.points.copy())
 
     @property
     def size(self) -> int:
@@ -127,6 +136,36 @@ class Grid(Generic[T]):
         )
 
         return Point(center_coords)
+
+    def corners(self) -> Tuple[Point, Point, Point, Point]:
+        """
+        Return the corner points (top-left, top-right, bottom-left, bottom-right) of the grid
+
+        This is an expensive operation and should be used sparingly.
+        """
+
+        if not self.points:
+            return (
+                Point.zero(self.dimensions),
+                Point.zero(self.dimensions),
+                Point.zero(self.dimensions),
+                Point.zero(self.dimensions),
+            )
+
+        min_coords = tuple(
+            [min(coords[i] for coords in self.points) for i in range(self.dimensions)]
+        )
+
+        max_coords = tuple(
+            [max(coords[i] for coords in self.points) for i in range(self.dimensions)]
+        )
+
+        top_left = Point(min_coords)
+        top_right = Point((max_coords[0], min_coords[1]))
+        bottom_left = Point((min_coords[0], max_coords[1]))
+        bottom_right = Point(max_coords)
+
+        return (top_left, top_right, bottom_left, bottom_right)
 
     def bounds(self) -> Tuple[Point, Point]:
         """
