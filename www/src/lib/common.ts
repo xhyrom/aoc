@@ -39,3 +39,13 @@ export const yearsBetween = (
   }
   return years;
 };
+
+export const activeAocYear = () => {
+  const now = new Date();
+
+  if (now.getMonth() < 11) {
+    return now.getFullYear() - 1;
+  }
+
+  return now.getFullYear();
+};

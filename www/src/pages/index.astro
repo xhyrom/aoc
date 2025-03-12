@@ -1,10 +1,9 @@
 ---
 import { getCollection } from "astro:content";
-import { yearsBetween } from "../lib/common.ts";
+import { activeAocYear, yearsBetween } from "../lib/common.ts";
 import Layout from "../layouts/Layout.astro";
 import Container from "../components/Container.astro";
 
-const currentYear = new Date().getFullYear();
 const series = await Promise.all(
   yearsBetween(2015).map(async (year) => {
     // @ts-expect-error fine
@@ -85,7 +84,7 @@ const statsEncoded = btoa(JSON.stringify(stats));
           </p>
           <p>
             Showing stars for the year <span id="year" class="text-yellow-600"
-              >{currentYear}</span
+              >{activeAocYear()}</span
             >
           </p>
 
