@@ -38,14 +38,12 @@ const parsed = entries
   })
   .filter((e) => e);
 
-const pad = (n: number) => (n < 10 ? `0${n}` : n);
-
 try {
-  await mkdir(`${import.meta.dir}/../src/content/stats`);
+  await mkdir(`${import.meta.dirname}/../src/content/stats`);
 } catch (e) {}
 
 await writeFile(
-  `${import.meta.dir}/../src/content/stats/${year}.json`,
+  `${import.meta.dirname}/../src/content/stats/${year}.json`,
   JSON.stringify(parsed, null, 2),
 );
 
