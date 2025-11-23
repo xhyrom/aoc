@@ -2,8 +2,8 @@ import { JSDOM } from "jsdom";
 import { writeFile, mkdir } from "node:fs/promises";
 
 const date = new Date();
-const day = process.argv[2] || date.getDate();
-const year = process.argv[3] || date.getFullYear();
+const day = parseInt(process.argv[2] || date.getDate().toString());
+const year = parseInt(process.argv[3] || date.getFullYear().toString());
 
 const res = await (
   await fetch(`https://adventofcode.com/${year}/leaderboard/day/${day}`, {
@@ -42,11 +42,11 @@ const parsed = entries.map((entry) => {
 const pad = (n: number) => (n < 10 ? `0${n}` : n);
 
 try {
-  await mkdir(`${import.meta.dir}/../src/content/lb-${year}`);
+  await mkdir(`${import.meta.dirname}/../src/content/lb-${year}`);
 } catch (e) {}
 
 await writeFile(
-  `${import.meta.dir}/../src/content/lb-${year}/${pad(day)}.json`,
+  `${import.meta.dirname}/../src/content/lb-${year}/${pad(day)}.json`,
   JSON.stringify(parsed, null, 2),
 );
 
