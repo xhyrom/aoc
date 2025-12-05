@@ -18,8 +18,7 @@ class RangeSet:
                 self.merged.append((curr_start, curr_end))
                 curr_start, curr_end = start, end
 
-            self.merged.append((curr_start, curr_end))
-
+        self.merged.append((curr_start, curr_end))
         self.starts = [iv[0] for iv in self.merged]
 
     def contains(self, point: int) -> bool:
