@@ -17,7 +17,7 @@ def chunks(filename: str = "e1.input.txt") -> Generator[Chunk, None, None]:
             yield list(group)
 
 
-def solve_math(numbers: list[int], operator: str) -> int:
+def solve(numbers: list[int], operator: str) -> int:
     if not numbers:
         return 0
 
@@ -31,35 +31,23 @@ def solve_math(numbers: list[int], operator: str) -> int:
 
 
 def part_1() -> int:
-    total = 0
-
-    for chunk in chunks():
-        rows = ["".join(col) for col in zip(*chunk)]
-        block = "\n".join(rows)
-
-        operator = next((char for char in block if char in "+*"))
-        numbers = [int(n) for n in re.findall(r"\d+", block)]
-
-        total += solve_math(numbers, operator)
-
-    return total
+    return sum(
+        solve(
+            [
+                int(n)
+                for n in re.findall(r"\d+", "\n".join("".join(r) for r in zip(*chunk)))
+            ],
+            next(c for col in chunk for c in col if c in "+*"),
+        )
+        for chunk in chunks()
+    )
 
 
 def part_2() -> int:
-    total = 0
-
-    for chunk in chunks():
-        numbers = []
-        operator = None
-
-        for col in chunk:
-            for char in col:
-                if char in "+*":
-                    operator = char
-
-            numbers.append(int("".join(char for char in col if char.isdigit())))
-
-        assert operator
-        total += solve_math(numbers, operator)
-
-    return total
+    return sum(
+        solve(
+            [int(re.sub(r"\D", "", "".join(col))) for col in chunk],
+            next(char for col in chunk for char in col if char in "+*"),
+        )
+        for chunk in chunks()
+    )
