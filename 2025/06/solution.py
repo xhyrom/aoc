@@ -1,9 +1,9 @@
 import math
 import re
 from itertools import groupby, zip_longest
-from typing import Generator, List, Tuple
+from typing import Generator
 
-Chunk = List[Tuple[str, ...]]
+Chunk = list[tuple[str, ...]]
 
 
 def chunks(filename: str = "e1.input.txt") -> Generator[Chunk, None, None]:
@@ -17,7 +17,7 @@ def chunks(filename: str = "e1.input.txt") -> Generator[Chunk, None, None]:
             yield list(group)
 
 
-def solve_math(numbers: List[int], operator: str) -> int:
+def solve_math(numbers: list[int], operator: str) -> int:
     if not numbers:
         return 0
 
