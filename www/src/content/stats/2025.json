@@ -1,27 +1,27 @@
 [
   {
     "day": 5,
-    "both": 13600,
-    "first": 6310
+    "both": 46370,
+    "first": 8594
   },
   {
     "day": 4,
-    "both": 55517,
-    "first": 2767
+    "both": 62172,
+    "first": 2794
   },
   {
     "day": 3,
-    "both": 66381,
-    "first": 11781
+    "both": 70929,
+    "first": 12511
   },
   {
     "day": 2,
-    "both": 83080,
-    "first": 12617
+    "both": 87589,
+    "first": 13182
   },
   {
     "day": 1,
-    "both": 112390,
-    "first": 34978
+    "both": 117288,
+    "first": 36266
   }
 ]
