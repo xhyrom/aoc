@@ -6,7 +6,7 @@ from typing import Generator
 Chunk = list[tuple[str, ...]]
 
 
-def chunks(filename: str = "e1.input.txt") -> Generator[Chunk, None, None]:
+def chunks(filename: str = "input.txt") -> Generator[Chunk, None, None]:
     lines = open(filename).read().splitlines()
     columns = list(zip_longest(*lines, fillvalue=" "))
 
