@@ -5,7 +5,7 @@ import Layout from "../layouts/Layout.astro";
 import Container from "../components/Container.astro";
 
 const series = await Promise.all(
-  yearsBetween(2015).map(async (year) => {
+  yearsBetween(2015, 2024).map(async (year) => {
     // @ts-expect-error fine
     const collection = await getCollection(`lb-${year}`);
     if (collection.length < 25) {
