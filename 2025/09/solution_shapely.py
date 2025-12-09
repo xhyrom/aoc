@@ -1,6 +1,7 @@
 from itertools import combinations
 
 from shapely.geometry import Polygon, box
+from shapely.prepared import prep
 
 
 def part_1() -> int:
@@ -21,17 +22,20 @@ def part_2() -> int:
         for line in open("input.txt").read().splitlines()
     ]
 
-    poly = Polygon(coords)
-    max_area = -1
+    candidates = []
+    for (x1, y1), (x2, y2) in combinations(coords, 2):
+        min_x, max_x = (x1, x2) if x1 < x2 else (x2, x1)
+        min_y, max_y = (y1, y2) if y1 < y2 else (y2, y1)
 
-    for a, b in combinations(coords, 2):
-        min_x, max_x = min(a[0], b[0]), max(a[0], b[0])
-        min_y, max_y = min(a[1], b[1]), max(a[1], b[1])
         area = (max_x - min_x + 1) * (max_y - min_y + 1)
+        candidates.append((area, min_x, min_y, max_x, max_y))
 
-        if area < max_area or not poly.covers(box(min_x, min_y, max_x, max_y)):
-            continue
+    candidates.sort(key=lambda x: x[0], reverse=True)
 
-        max_area = area
+    poly = prep(Polygon(coords).simplify(0))
 
-    return max_area
+    for area, min_x, min_y, max_x, max_y in candidates:
+        if poly.covers(box(min_x, min_y, max_x, max_y)):
+            return area
+
+    return -1
