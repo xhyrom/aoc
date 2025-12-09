@@ -12,7 +12,8 @@ def part_1() -> int:
     ]
 
     return max(
-        abs(a[0] - b[0] + 1) * abs(a[1] - b[1] + 1) for a, b in combinations(coords, 2)
+        (abs(a[0] - b[0]) + 1) * (abs(a[1] - b[1]) + 1)
+        for a, b in combinations(coords, 2)
     )
 
 
