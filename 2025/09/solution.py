@@ -26,10 +26,11 @@ def part_2() -> int:
     for a, b in combinations(coords, 2):
         min_x, max_x = min(a[0], b[0]), max(a[0], b[0])
         min_y, max_y = min(a[1], b[1]), max(a[1], b[1])
+        area = (max_x - min_x + 1) * (max_y - min_y + 1)
 
-        if poly.covers(box(min_x, min_y, max_x, max_y)):
-            width = max_x - min_x + 1
-            height = max_y - min_y + 1
-            max_area = max(max_area, width * height)
+        if area < max_area or not poly.covers(box(min_x, min_y, max_x, max_y)):
+            continue
+
+        max_area = area
 
     return max_area
